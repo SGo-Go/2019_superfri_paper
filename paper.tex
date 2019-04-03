@@ -1,0 +1,64 @@
+%% An example of the article based on superfri.cls class file of
+%% ``Supercomputing Frontiers and Innovations. An International Journal''
+%% http://superfri.org/.
+
+\documentclass{superfri}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{adjustbox}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{patterns}
+\usepgfplotslibrary{groupplots}
+\pgfplotsset{compat=1.9, every axis/.append style={
+                    label style={font=\tiny},
+                    tick label style={font=\tiny},
+                    legend style={font=\tiny},
+                    height=6cm
+                    }}
+
+%%\captionsetup[subfigure]{labelformat=simple} % default is 'parens'
+%%\captionsetup[subfigure]{width=0.9\textwidth}
+%%\renewcommand\thesubfigure{\thefigure.\alph{subfigure}.}
+\DeclareCaptionSubType*[alph]{figure}
+\captionsetup[subfigure]{labelformat=simple,labelsep=period, width=0.9\textwidth}
+% ------------
+\bibliographystyle{superfri}
+
+\begin{document}
+
+\author{Damian Kaliszan, Norbert Meyer, Sebastian Petruczynik\footnote{\label{psnc}Poznan Supercomputing and Networking Center, ul. Jana Paw\l a II 10, 61-139 Pozna\'n, Poland}, Michael Gienger, Sergiy Gogolenko\footnote{\label{hlrs}High-Performance Computing Center Stuttgart, Nobelstra\ss{}e 19, 70569 Stuttgart, Germany}}
+
+%%%\author{Alice~M.~Scientist\footnote{\label{susu}South Ural State University, Chelyabinsk, Russian Federation}$^{,2}$\orcidID{0000-1111-2222-3333} \and  Bob~A.~Scientist\footnoteref{susu} \and Derek~R.~Author\footnote{\label{msu}Lomonosov Moscow State University, Moscow, Russian Federation}\orcidID{1111-2222-3333-4444}
+
+
+\title{HPC processors benchmarking assessment for Global System Science applications}
+%%\thanks{The paper is recommended for publication by the Program Committee of the International Scientific Conference "Parallel computational technologies (PCT) 2018".}}
+
+\maketitle{}
+\input{abstract}
+
+
+
+% -----------------------------------------------------------------------
+
+\input{introduction}
+\input{applications}
+%%\input{description_tests}
+\input{architectures}
+\input{analysis}
+\input{summary}
+\input{future_work}
+
+\section*{Acknowledgements}
+This work has been supported by the CoeGSS (Centre of Excellence for Global System Science) project and has been partly funded by the European Commission's ICT activity of the H2020 Programme under grant agreement number: 676547.
+
+\openaccess
+
+\bibliography{example}
+\end{document}

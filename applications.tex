@@ -1,0 +1,139 @@
+\section{Description of applications and tests used for GSS representation}
+Functionally, the  benchmarked  applications  can  be  categorized  into  two  groups: social simulation software and large-scale CFD (Computational Fluid Dynamics) applications. From the perspective of programming languages, GSS benchmark covered applications written in C++ and Python, which are the most popular programming languages among GSS experts who use HPC.
+
+The applications have been selected both from projects provided by the project and generally available in public repositories.
+
+This section contains a short description of tested applications: OpenSWPC, ABMS, CCTM, CM1, IPF, HWRF, Green Growth (GG). 
+
+\subsection{OpenSWPC}
+
+Open-source Seismic Wave Propagation Code (OpenSWPC) is an open-source software that simulates seismic wave propagation (2D or 3D) by solving motion equations using the Finite Difference Method (FDM) \cite{OpenSWPC2}. OpenSWPC is widely used in seismology and has a high portability, allowing for excellent performance from PC clusters to supercomputers. 
+\iffalse
+Without modifying the code, users can simulate seismic wave propagation using their own speed structure models and the necessary source representations in the input parameter file. The software code is equipped with a frequency-independent damping model based on a generalised Zener (standard linear solid - SLS model) body and an efficiently selected, perfectly matched boundary absorbing layer. It has different modes for the different input data types of the velocity structure model and different source representations, such as single force, torque tensioner and flat frequency, which can be easily selected by input parameters. Common binary data formats, a common network data form (NetCDF), and a seismic analysis code (SAC) are used to input a heterogeneous structure model and simulation results so that users can easily operate their input and output data sets. All codes are written in Fortran 2003 and are available with detailed documents in a public repository.
+\fi
+
+\underline{Project Web-page/Repository}: \url{https://github.com/takuto-maeda/OpenSWPC}
+
+\underline{Downloads}: \url{https://github.com/takuto-maeda/OpenSWPC/releases}
+\iffalse
+\underline{Use case description}
+
+The first step was to install the required system packages such as \textit{gmt, gmt-dcw, gmt-gshhg, libnetcdf-dev}. The next one required to run \textit{gen\_JIVSM.sh} script to generate files used as a model input around Japanese Islands for seismic wave propagation in and around Japan. They describe 3D complicated subsurface structures of the earth. The above script used the following input files \textit{lp2012nankai-e\_str.zip, lp2012nankai-w\_str.zip} available from public repository at \cite{HERP} and \textit{ETOPO1\_Bed\_g\_gmt4.grd.gz} from \cite{NOAA} to be installed in the \textit{dataset/vmodel} folder.
+Finally, inside the \textit{OpenSWPC/src} folder the files \textit{shared/makefile.arch} and \textit{shared/makefile-tools.arch} needed to be updated to fix the system paths.
+After successful compilation an input file (e.g example/input.inf) had to be provided to run the application. Critical attributes influencing the run times included the grid size defined by \textit{nx = 1000, ny = 875, nz = 200}   (total grid number in x, y and z directions) and \textit{nt = 100}  (time step number)
+\fi
+
+Depending on the hardware and installed libraries the following MPI versions were used: Intel\textregistered MPI Library for Linux\textregistered OS, Version 2017 2017.1.132 (2-node Intel\textregistered\ Xeon\textregistered\ Gold 6140, Eagle cluster), Open MPI 1.10.2 (ARM, AMD Epyc\textsuperscript{TM})
+
+
+\subsection{ABMS}
+The code of Agent-based Modelling and Simulation (ABMS) is a basic educational example for the interaction of agents and tests the performance of the ABM (Agent-based Model) framework including computation, I/O, waiting time, and synchronisation time.
+\iffalse
+Two types of entities are created: location, as part of a spatial domain, and acting agents that follow some decision rule and interact with each other. The agents are distributed uniformly on a 2D area. The spatial proximity increases the likelihood of agents to get connected. Each agent has only one property "A", which is initiated as a random floating point number between 0 and 1 and is connected with other m agents.
+At each step the agents perform the same action pattern. If the average of all values "A" of all connected agents is less than 0.5, the agents draw a new property "A" for themselves. It is to observe if the global average of "A" is affected by the decision rule and, if so, how.
+This minimal example therefore contains a computational component per agent (action) and a communication component. The property "A" is synchronised via ghost agents between the processes.
+Depending on whether the focus is on weak or strong scaling, the example setup can adapt to the number of used processes.
+\fi
+
+\underline{Project Web-page/Repository}: \url{https://github.com/CoeGSS-Project/abm4py}
+
+\underline{Downloads}: \url{https://github.com/CoeGSS-Project/abm4py/archive/master.zip}
+
+\iffalse
+\underline{Use case description}
+
+The application is purely python-based code that requires several modules among which the most important is \textit{h5py} (pythonic interface to the HDF5 binary data format). It additionally requires \textit{class\_auxiliary.pyc,  class\_graph.pyc} and \textit{lib\_gcfabm.pyc} files containing the application's byte code. Additionally, the python environment has to be equipped with additional modules preinstalled such as \textit{numpy, mpi4py, matplotlib, pandas}, etc.
+\fi
+
+The application was tested against two cases, one  where layer shape size is set to 64x64 and the second with a size of 128x128. For both cases the possible numbers of MPI processes used were limited to square numbers (1,4,9,16...).
+
+\subsection{CMAQ/CCTM}
+CMAQ (Community Air Multiscale Quality Modelling System) is an active open-source development project of the U.S. EPA (\textit{Environmental Protection Agency}) Computational Exposure Division that consists of a suite of programs for conducting air quality model simulations. CMAQ is supported by the CMAS Center.
+CMAQ combines current knowledge in atmospheric science and air quality modelling with multi-processor computing techniques in an open-source framework to deliver fast, technically sound estimates of ozone, particulates, toxins, and acid deposition.
+CCTM (\textit{The CMAQ Chemistry-Transport Mode}) is the only CMAQ program that can be run in parallel.
+
+\underline{Project Web-page/Repository}: \url{https://www.cmascenter.org/cmaq}
+
+\underline{Downloads}: \url{https://www.cmascenter.org/download/forms/step_2.cfm?prod=2}
+
+\underline{Use case description}
+
+The following libraries have to be installed prior to building CCTM: \textit{NetCDF, NetCDF Fortran, IOAPI}. When installed, the following scripts could have been initiated to finish the installation and run the application itself: \textit{config\_cmaq.csh, bldit\_project.csh, bldit\_cctm.csh, run\_cct.csh}.
+Benchmark data have been downloaded based on the information provided by EPA for a single day \cite{EPA}.
+
+\subsection{CM1}
+CM1 is a three-dimensional, time-dependent, non-hydrostatic numerical model that has been developed primarily by George Bryan at The Pennsylvania State University (PSU) (circa 2000-2002) and at the National Center for Atmospheric Research (NCAR) (2003-present). CM1 is designed primarily for idealized research, particularly for deep precipitating convection and for studies of relatively small-scale processes in the Earth's atmosphere, such as thunderstorms. \cite{CM1}
+
+\iffalse
+CM1 is also designed for distributed-memory computing systems. In CM1 there are three models of parallelization. Shared memory parallelization with OpenMP, distributed memory using MPI and mix of both of them - hybrid OpenMP/MPI.
+\fi
+
+\underline{Project Web-page/Repository}: \url{http://www2.mmm.ucar.edu/people/bryan/cm1}
+
+\underline{Downloads}: \url{https://github.com/NCAR/CM1}
+
+\underline{Use case description}
+
+CM1 use case contains the following steps: CM1 software download and unpack  \cite{CM1DATA}, compilation and build. When successfully compiled, a \textit{cm1.exe} binary file is created under \textit{cm1r19/run} directory. \textit{cm1r19/ run/ namelist.input} configuration file was used with appropriate \textit{nodex, nodey} and \textit{ppnode} values to let the simulation start on the given number of processors (NP). The simulation is started by calling mpirun: \textit{mpirun -np \$NP ./cm1.exe}
+
+
+\subsection{IPF}
+IPF (Iterative proportional fitting) is a "technique that can be used to adjust a distribution reported in one data set by totals reported in others. IPF is used to revise tables of data where the information is incomplete, inaccurate, outdated, or a sample" \cite{1912:ipf}. 
+
+\iffalse
+This procedure reconstructs a contingency matrix based on the known marginals in an unbiased way  IPF can be applied to multidimensional matrices, but the multidimensional case is a simple generalization of the two-dimensional case on which we base our presentation.
+IPF fits the matrix coefficients so that the sums of elements of every row and every column are equal to the given respective marginals. The initial contingency matrix values are either all, or are based on some known correlation data (such as a micro sample). In general, IPF solves an underspecified problem, and its result is the maximum likelihood estimation assuming that the elements of the matrix are drawn from the Poisson distribution given by the initial contingency matrix.
+
+IPF is often performed to fit a contingency matrix to known marginals as one step of synthetic population generation. If a lower-dimension contingency matrix is known, their values can be used as marginal for IPF, which then performs fitting that matches the correlations defined by this contingency matrix \cite{2018:norman}.
+The IPF procedure is often followed by sampling, which uses the values from the reconstructed contingency matrix as weights. It may also be followed by the Iterative Proportional Updating (IPU) procedure, which uses reconstructed contingency matrices for individuals and households, and a micro sample of households containing individuals to perform individual-household assignment.
+
+\underline{Use case description}
+
+The benchmarked IPF implementation performs the IPF procedure for a 2-dimensional matrix.
+The implementation is written in C programming language and uses the MPI and PBLAS APIs. MPI and PBLAS are common HPC APIs whose implementations are available on many platforms. On a typical Linux systems they can be provided by the OpenMPI, OpenBLAS and Scalapack open-source packages. On HPC systems they are typically provided by proprietary libraries, such as the Cray MPI library, the Cray libsci library or the Intel MKL library.
+The implementation uses MPI to launch computing processes on different computational nodes, and perform message-based communication between them. The PBLAS API which, if built on top of MPI, provides operations on distributed vectors and matrices, such as computing a sum of a distributed vector (pdasum) or scaling a distributed vector (pdscal), both of which are used by the implementation.
+The PBLAS operations assume that the distributed vectors and matrices are laid out according to the one- or two-dimensional block-cyclic distribution. The distribution is parametrised by the block size, which affects the performance of the operations performed on the vectors and matrices.
+The implementation performs iterations until the maximum-norm error between the target marginals and the marginal computed from the matrix falls below a threshold value.
+\fi
+
+For testing purposes IPF was compiled against ScaLAPACK and OpenBLAS. 
+Application parameters \textit{PROCROWS, PROCCOLS, ROWBLOCK} and \textit{COLBLOCK}  and a limited number of MPI processes to \textit{PROCROWS* PROCCOLS}. \textit{ROWBLOCK} and \textit{COLBLOCK} are required to be set independently with values equal to the power of 2.
+
+\textit{Note}: This IPF implementation is not published with open access on the Internet.
+
+\subsection{Weather Research and Forecasting model}
+The Weather Research and Forecasting (WRF) model is an example of a quite well scalable application. Therefore it was added to the set of tests increasing the variety of requirements of the \textit{GSS benchmark}. 
+Hurricane Katrina formed as Tropical Depression Twelve over the southeastern Bahamas on August 23, 2005, as the result of an interaction of a tropical wave and the remains of Tropical Depression Ten. It strengthened into Tropical Storm Katrina on the morning of August 24 and continued to change its form and intensification on the following days and caused a lot of damage.
+
+\underline{Project Web-page/Repository}: \url{https://dtcenter.org/HurrWRF/users}
+
+\underline{Downloads}: \url{http://www.dtcenter.org/HurrWRF/users/downloads/index.php}
+
+\underline{Hurricane WRF software}
+
+The Hurricane Weather Research and Forecasting (HWRF)\cite{2018:hwrf} model is a specialised version of the Weather Research and Forecasting (WRF) model and is used to forecast the track and intensity of tropical cyclones. The model was developed by the National Oceanic and Atmospheric Administration (NOAA), the U.S. Naval Research Laboratory, the University of Rhode Island, and Florida State University. 
+This HWRF modeling system, based on the NMM (non-hydrostatic mesoscale model) core of the WRF (Weather Research and Forecasting) model, is a high resolution coupled air-sea-land prediction model with a movable nested grid and with the applicability to the prediction problems of hurricane track, intensity, structure, and rainfall. The model uses a two-way interactive movable nested grid that follows the forecasted path of the tropical cyclone.
+
+
+\subsection{Green Growth using Pandora library}
+This green growth pilot is a first implemented innovation-diffusion model for electric cars with a global scope and a fine-scale spatial data resolution. The model is agent-based and is studying the car-centered global system in view of a green growth transition. 
+\iffalse
+There are two implementations of his model: deterministic and a stochastic whose implementation for benchmarking purposes was used \cite{2018:gg_pilot}.
+In this preliminary version of the green growth pilot, authors consider only two classes of cars: "green" cars, which for now correspond to battery electric vehicles due to data availability, and "brown" ones. Cars are distributed on a gridded global map, that is, in the first instance "agents" are simply cells in the grid, which automatically specifies a neighbourhood network between them, and their characteristics are a number of brown and one of green cars. Each cell at each time step computes the number of new cars to be added from the total numbers exogenous given and a percentage of cars being scrapped.
+\fi
+This document does not go further into theory as it is beyond its main subject.
+
+\underline{Project Web-page/Repository}: \url{http://xrubio.github.io/pandora/}
+
+\underline{Downloads}: \url{https://github.com/xrubio/pandora/tarball/master}
+\iffalse
+\underline{Use case description}
+
+The first step was to compile the library itself using SCons \cite{SCONS} as the main building tool.  It is open-source, python-based and next generation substitution of make utility. Version 2.4.1 of the tool  was used because the newest version was not compatible with the build input file (/textit{SConstruct}). For the build process Pandora \cite{2014:pandora} requires three additional, external libraries: \textit{HDF5, GDAL} and \textit{BOOST}. In the case of GDAL, version 1.11.5 was used for similar reasons to SCons. GDAL is a Geospatial Data Abstraction Library and presents a single raster abstract data model and single vector abstract data model to the calling application for all supported formats. It also comes with a variety of useful command line utilities for data translation and processing. Finally, Pandora installation required a BOOST C++ library built in place.
+Depending on the hardware and system capabilities the following MPI libraries were used: Intel\textregistered MPI Library for Linux* OS, Version 2017 Update 1, Open MPI 1.10.2 (ARM), impi 5.0.3.048 (Eagle).
+Input data for benchmark has been delivered as two maps (Europe and world) with two different resolutions 840x680 and 8640x3432. 
+\fi
+
+The above applications were cross-tested with selected processor architectures. The only exception is HWRF (Hurricane WRF), which could not be compiled on the ARM and Power8+ architectures due to the scale of this application and the difficulty in the compilation process.
+Each test has been repeated twice with the measurements for minimum wall time selected to be reported. It is worth noticing that some results reveal unusual and difficult-to-explain behaviour in memory consumption and/or I/O, which cannot be anticipated based on processor architecture or node configuration. These cases are supposed to be a subject of future analysis by applications authors or GSS community.
+In general, the characteristic of the applications is found to be different and varying from I/O dependent to purely computational.
