@@ -1,9 +1,9 @@
-\section{Description of applications and tests used for GSS representation}
+\subsection{Representative GSS applications selected for the benchmark}
 Functionally, the  benchmarked  applications  can  be  categorized  into  two  groups: HPC-compliant social simulation software and large-scale CFD (Computational Fluid Dynamics) applications. From the perspective of programming languages, GSS benchmark covered applications written in C++ and Python, which are the most popular programming languages among GSS experts who use HPC.
 % The applications have been selected both from projects provided by the project and generally available in public repositories.
 This section contains a short description of tested applications: OpenSWPC, ABM4Py, CCTM, CM1, IPF, HWRF, Pandora/GG.
 
-\subsection{HPC-compliant social simulation software}
+\subsubsection{HPC-compliant social simulation software}
 
 \paragraph{ABM4Py} (ABMS for Python) is a distributed agent-based modelling and simulation framework for fast prototyping agent based components of GSS models \cite{2018:abm4py}.
 Agent-based models implemented in \textsf{ABM4Py} follow the graph-based representation \cite{2018:abm4py,2017:graph_abms}.
@@ -48,7 +48,7 @@ There are two implementations of his model: deterministic and a stochastic whose
 In this preliminary version of the green growth pilot, authors consider only two classes of cars: "green" cars, which for now correspond to battery electric vehicles due to data availability, and "brown" ones. Cars are distributed on a gridded global map, that is, in the first instance "agents" are simply cells in the grid, which automatically specifies a neighbourhood network between them, and their characteristics are a number of brown and one of green cars. Each cell at each time step computes the number of new cars to be added from the total numbers exogenous given and a percentage of cars being scrapped.
 \fi
 
-\underline{Project Web-page/Repository}: \url{http://xrubio.github.io/pandora/}
+\underline{Project Web-page}: \url{http://xrubio.github.io/pandora/}
 
 \underline{Downloads}: \url{https://github.com/xrubio/pandora/tarball/master}
 \iffalse
@@ -94,7 +94,7 @@ Application parameters \textit{PROCROWS, PROCCOLS, ROWBLOCK} and \textit{COLBLOC
 
 \textit{Note}: These IPF codes are not published with open access on the Internet yet.
 
-\subsection{Large-scale CFD applications}
+\subsubsection{Large-scale CFD applications}
 
 \paragraph{OpenSWPC} (Open-source Seismic Wave Propagation Code) is an open-source software fro large-scale simulation of seismic waves propagation (2D or 3D) by solving motion equations using the finite difference method (FDM) \cite{OpenSWPC2}. OpenSWPC is widely used in seismology. It ports easily and delivers good performance on different distributed systems varying from small PC clusters to large-scale supercomputers.
 \iffalse
@@ -146,7 +146,7 @@ CM1 is designed primarily for idealized research, particularly for deep precipit
 CM1 is also designed for distributed-memory computing systems. In CM1 there are three models of parallelization. Shared memory parallelization with OpenMP, distributed memory using MPI and mix of both of them - hybrid OpenMP/MPI.
 \fi
 
-\underline{Project Web-page/Repository}: \url{http://www2.mmm.ucar.edu/people/bryan/cm1}
+\underline{Project Web-page}: \url{http://www2.mmm.ucar.edu/people/bryan/cm1}
 
 \underline{Downloads}: \url{https://github.com/NCAR/CM1}
 
@@ -164,7 +164,7 @@ The Hurricane Weather Research and Forecasting (HWRF) model is a specialized ver
 It is used to forecast the track and intensity of tropical cyclones.
 % The HWRF modeling system, based on the NMM (non-hydrostatic mesoscale model) core of the WRF (Weather Research and Forecasting) model, is a high resolution coupled air-sea-land prediction model with a movable nested grid and with the applicability to the prediction problems of hurricane track, intensity, structure, and rainfall. The model uses a two-way interactive movable nested grid that follows the forecasted path of the tropical cyclone.
 
-\underline{Project Web-page/Repository}: \url{https://dtcenter.org/HurrWRF/users}
+\underline{Project Web-page}: \url{https://dtcenter.org/HurrWRF/users}
 
 \underline{Downloads}: \url{http://www.dtcenter.org/HurrWRF/users/downloads/index.php}
 

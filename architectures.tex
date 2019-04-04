@@ -1,12 +1,16 @@
-\section{Novel HPC Architectures}
+\subsection{Configuration of testbeds used for benchmerking}
 
-\subsection{Intel\textregistered\ Xeon\textregistered\ Gold 6140 (SkyLake SP)}
-The new core for Skylake-X, technically called the Skylake-SP core architecture, delivers some new improvements compared to the previous Broadwell-E platform. One of those "upgrades" has been towards better SIMD performance: clustering multiple data entries into a single element and performing the same operation to each of them at once in one go. This has evolved in many forms, from SSE and SSE2 through AVX and AVX2 and now into AVX-512 (technically AVX-512-F + some others).
-
-Other important changes available in Intel\textregistered\ Xeon\textregistered\ Gold are presented separately in \cite{INTELXEONGOLD6140}.
+We executed our benchmark on four testbeds using cutting-edge processors recently introduced by four major processor vendors:
+Xeon\textregistered Gold 6140 \cite{INTELXEONGOLD6140} from Intel,
+AMD Epyc\textsuperscript{TM} 7551 from AMD,
+Hi1616 from ARM, and
+Power8 from IBM.
+While
+table~\ref{tab:clusterconfig} summarizes relevant technical characteristics of our testbeds,
+the text below describes important architectural improvements introduced into the processors.
 
 \begin{table}
-\caption{Cluster node configurations}
+\caption{Testbed characteristics}
 \label{tab:clusterconfig}
 \begin{adjustbox}{width=1\textwidth}
 \small
@@ -15,33 +19,52 @@ Other important changes available in Intel\textregistered\ Xeon\textregistered\ 
 \multicolumn{1}{c|}{} & \textbf{Intel\textregistered\ Xeon\textregistered\ Gold 6140} & \textbf{AMD Epyc\textsuperscript{TM} 7551} & \textbf{ARM Hi1616} & \textbf{Power8+ S822LC} \\ \hline
 \multicolumn{1}{|l|}{\textbf{No. of nodes}} & 2 & 1 & 2 & 1 \\ \hline
 \multicolumn{1}{|l|}{\textbf{Cores per node}} & 36 & 64 & 64 & 20 \\ \hline
-\multicolumn{1}{|l|}{\textbf{CPU Frequency [GHz]}} & 2.3 & 2 & 2.4 & 2.86 \\ \hline
+\multicolumn{1}{|l|}{\textbf{CPU Frequency [GHz]}} & 2.3 & 2 & 2.4 & 2.92 \\ \hline
 \multicolumn{1}{|l|}{\textbf{RAM [GB]}} & 192 & 512 & 128 & 512 \\ \hline
 \multicolumn{1}{|l|}{\textbf{TDP [W]}} & 140 & 180 & 70 & 190 \\ \hline
 \multicolumn{1}{|l|}{\textbf{Processor price [USD]}} & 2450 & 3743 & 300 & 1500 \\ \hline
 \multicolumn{1}{|l|}{\textbf{Interconnect desc.}} & 10Gb Ethernet & 10Gb Ethernet & 10Gb Ethernet & 10Gb Ethernet \\ \hline
 \multicolumn{1}{|l|}{\textbf{I/O and disks}} & SSD & SSD & SSD & SSD \\ \hline
-\multicolumn{1}{|l|}{\textbf{OS version}} & Ubuntu 16.04.03 LTS & \multicolumn{1}{c|}{CentOS 6.9} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}l@{}}EulerOS release 2.0 (SP2),\\ Ubuntu 16.04.3 LTS\end{tabular}} & \multicolumn{1}{c|}{Ubuntu 16.04.2 LTS} \\ \hline\end{tabular}
+\multicolumn{1}{|l|}{\textbf{OS version}} & Ubuntu 16.04.03 LTS & \multicolumn{1}{c|}{CentOS 6.9} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}l@{}}EulerOS release 2.0 (SP2),\\ Ubuntu 16.04.3 LTS\end{tabular}} & \multicolumn{1}{c|}{Ubuntu 16.04.2 LTS} \\ \hline
+\multicolumn{5}{|c|}{Total bandwidth estimates (per node) [GBps]}  \\ \hline
+\multicolumn{1}{|l|}{\textbf{L1 (data) cache}} &  &  &  & 2803 \\ \hline
+\multicolumn{1}{|l|}{\textbf{L2 cache}} &  &  &  & 2803 \\ \hline
+\multicolumn{1}{|l|}{\textbf{L3}} &  &  &  & 3738 \\ \hline
+\multicolumn{1}{|l|}{\textbf{Total memory}} &  &  &  & 230 \\ \hline
+\multicolumn{1}{|l|}{\textbf{SMP interconnect}} &  &  &  & 38.4 \\ \hline
+\multicolumn{1}{|l|}{\textbf{PCIe interconnect}} &  &  &  & 128 \\ \hline
+\multicolumn{1}{|l|}{\textbf{I/O} (maximum theoretical)} &  &  &  & 64 (simplex) \\ \hline
+\end{tabular}
 \end{adjustbox}
 \end{table}
 
-\subsection{AMD Epyc\texorpdfstring{\textsuperscript{TM}}\ 7551}
-AMD Epyc\textsuperscript{TM} processor is based on the Zen microarchitecture and is manufactured on a 14 nm process. This microarchitecture was designed from the ground up with data centres in mind, for optimal balance and power. This new core design can process four x86 assembler instructions per cycle and also introduces Simultaneous Multithreading (SMT). Another improvement that Zen has had over Bulldozer (the previous microarchitecture) is the instruction set. The part of them is exclusive for AMD (ADX, RDSEED, SMAP, SHA1/SHA256, CLFLUSHOPT, CLZERO - Clear Cache Line, PTE Coalescing) \cite{2019:epyc} \cite{now:epyc}.
-Zen microarchitecture also introduces a considerable number of improvements and design changes over Bulldozer, e.g: utilizes 14 nm process (from 28 nm), Simultaneous Multithreading (SMT) support, improved branch mispredictions, better branch predictions with 2 branches per BTB entry, large Op cache (2K instructions), cache system (L1: 64 KiB, Write-back L1 cache eviction policy (from write-through), 2x the bandwidth; L2: 2x the bandwidth), Page Table Entry (PTE) Coalescing.
+\paragraph{Intel\textregistered\ Xeon\textregistered\ Gold 6140 (SkyLake SP).}
+The new core for Skylake-X, technically called the Skylake-SP core architecture, delivers new improvements compared to the previous Broadwell-E platform. One of those ``upgrades'' has been towards better SIMD performance: clustering multiple data entries into a single element and performing the same operation to each of them at once in one go. This has evolved in many forms, from SSE and SSE2 through AVX and AVX2 and now into AVX-512-F.
+Other important changes available in Intel\textregistered\ Xeon\textregistered\ Gold are presented separately in \cite{INTELXEONGOLD6140}.
 
-\subsection{ARM Hi1616}
-The HiSilicon Hi1616 V100 products are based on ARM Cortex-A72 cores. These are high-performance, low-power processors based on the ARMv8-A architectural platform and the Hi16xx Family supports all features of the ARMv8-A architectural platform.
-The Cortex-A72 processor is a high-performance processor that implements the Armv8-A architecture. Its main benefits include:
-\begin{itemize}
-  \item[\textbullet]Arm's state-of-the-art high-performance and energy-efficient processor for the infrastructure, mobile and automotive industries.
-  \item[\textbullet]Market leading computational density in all coefficients of application forms.
-  \item[\textbullet]Enhanced performance and efficiency, with full 64-bit support for the ARMv8-A.
-\end{itemize}
-The processor features several major microarchitectural improvements that build on the current generation of ARMv8-A cores. Improvements in floating point, integer, and memory performance improve the performance of each major load class. \cite{2017:hi1616} \cite{2019:hi1616}
-The Cortex-A72 processor is fully supported by ARM programming tools.
+\paragraph{AMD Epyc\texorpdfstring{\textsuperscript{TM}}\ 7551.}
+AMD Epyc\textsuperscript{TM} processor is based on the Zen microarchitecture and is manufactured on a 14 nm process. This microarchitecture was designed from the ground up with data centres in mind, for optimal balance and power. The new core design can process four x86 assembler instructions per cycle and introduces Simultaneous Multithreading (SMT).
+%% Another improvement that Zen has had over Bulldozer (the previous microarchitecture) is the instruction set. The part of them is exclusive for AMD (ADX, RDSEED, SMAP, SHA1/SHA256, CLFLUSHOPT, CLZERO - Clear Cache Line, PTE Coalescing).
+Zen microarchitecture also introduces a considerable number of improvements and design changes over Bulldozer
+including wider instruction set, larger cache system, 2x higher bandwidth, better branch predictions, etc
+\cite{2019:epyc, now:epyc}.
+%% , e.g: utilizes 14 nm process (from 28 nm), Simultaneous Multithreading (SMT) support, improved branch mispredictions, better branch predictions with 2 branches per BTB entry, large Op cache (2K instructions), cache system (L1: 64 KiB, Write-back L1 cache eviction policy (from write-through), 2x the bandwidth; L2: 2x the bandwidth), Page Table Entry (PTE) Coalescing.
 
-\subsection{Power8+ S822LC}
-Although the IBM 8335 Power System S822LC for High Performance Computing server Model GTB (8335-GTB) was released in September 2016, it still remains one of the most interesting hardware platforms for HPC available at the market. This platform delivers breakthrough accelerated computing performance. Being designed for "accelerated workloads in high-performance computing (HPC), high-performance data analytics (HPDA), enterprise data centers, and accelerated cloud deployments" \cite{2015:power8} \cite{2016:power8} , it perfectly suits all kinds of CoeGSS applications including preprocessing (e.g., creating synthetic populations and synthetic networks), simulation, HPDA, and visualization.
-S822LC brings together two POWER8 CPUs with two or four - HLRS testbed exploits four - NVIDIA Tesla P100 GPUs through POWER8 with NVLink Technology. NVLink is used to transfer data to GPUs, while actual instructions are still transferred to accelerators via PCIe. Thus, the user can benefit from NVLink, when changes from POWER8 without GPUs (S822L) to POWER8+ (S822LC), only if the target application uses modern features of NVIDIA GPUs. 
+\paragraph{ARM Hi1616.}
+The HiSilicon Hi1616 V100 products are based on ARM Cortex-A72 cores. These are high-performance, low-power processors based on the ARMv8-A architectural platform. % and the Hi16xx Family supports all features of the ARMv8-A architectural platform.
+%% The Cortex-A72 processor is a high-performance processor that implements the Armv8-A architecture. Its main benefits include:
+%% \begin{itemize}
+%%   \item[\textbullet]Arm's state-of-the-art high-performance and energy-efficient processor for the infrastructure, mobile and automotive industries.
+%%   \item[\textbullet]Market leading computational density in all coefficients of application forms.
+%%   \item[\textbullet]Enhanced performance and efficiency, with full 64-bit support for the ARMv8-A.
+%% \end{itemize}
+Hi1616 features several major microarchitectural improvements in memory performance, as well as in integer and floating point arithmetics that build on top of the current generation of ARMv8-A cores \cite{2017:hi1616,2019:hi1616}.
+% Improvements in floating point, integer, and memory performance improve the performance of each major load class.
+%% The Cortex-A72 processor is fully supported by ARM programming tools.
 
-All cluster node configurations are presented in Table~\ref{tab:clusterconfig}.
+\paragraph{Power8+ S822LC.}
+%% Although the IBM 8335 Power System S822LC for High Performance Computing server Model GTB (8335-GTB) was released in September 2016, it still remains one of the most interesting hardware platforms for HPC available at the market. This platform delivers breakthrough accelerated computing performance.
+Being designed for ``accelerated workloads in high-performance computing (HPC), high-performance data analytics (HPDA), enterprise data centers, and accelerated cloud deployments'' \cite{2015:power8,2016:power8}, IBM 8335 Power System S822LC for High Performance Computing server Model GTB (8335-GTB) perfectly suitsfor all kinds of GSS applications. % including preprocessing (e.g., creating synthetic populations and synthetic networks), simulation, HPDA, and visualization.
+S822LC brings together two POWER8 CPUs with four NVIDIA Tesla P100 GPUs through NVLink Technology.
+%% NVLink is used to transfer data to GPUs, while actual instructions are still transferred to accelerators via PCIe.
+
