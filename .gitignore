@@ -1,7 +1,7 @@
-abstract.log
-paper.aux
-paper.bbl
-paper.blg
-paper.log
-paper.out
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.dvi
 paper.pdf
