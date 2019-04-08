@@ -1,10 +1,11 @@
-\subsection{Configuration of testbeds used for benchmerking}
-
+\subsection{Configuration of testbeds used for the benchmark}
+\label{sec:arch}
+           
 We executed our benchmark on four testbeds using cutting-edge processors recently introduced by four major processor vendors:
-Xeon\textregistered Gold 6140 \cite{INTELXEONGOLD6140} from Intel,
-AMD Epyc\textsuperscript{TM} 7551 from AMD,
-Hi1616 from ARM, and
-Power8 from IBM.
+Xeon\textregistered Gold 6140 from Intel \cite{INTELXEONGOLD6140},
+AMD Epyc\textsuperscript{TM} 7551 from AMD \cite{2019:epyc, now:epyc},
+ARM Hi1616 from HiSilicon \cite{2017:hi1616,2019:hi1616},
+and Power8 from IBM \cite{2015:power8,2016:power8}.
 While
 table~\ref{tab:clusterconfig} summarizes relevant technical characteristics of our testbeds,
 the text below describes important architectural improvements introduced into the processors.
@@ -20,6 +21,9 @@ the text below describes important architectural improvements introduced into th
 \multicolumn{1}{|l|}{\textbf{No. of nodes}} & 2 & 1 & 2 & 1 \\ \hline
 \multicolumn{1}{|l|}{\textbf{Cores per node}} & 36 & 64 & 64 & 20 \\ \hline
 \multicolumn{1}{|l|}{\textbf{CPU Frequency [GHz]}} & 2.3 & 2 & 2.4 & 2.92 \\ \hline
+\multicolumn{1}{|l|}{\textbf{L1 (data) cache [KB]}} &  &  &  & 32, 8-way \\ \hline
+\multicolumn{1}{|l|}{\textbf{L2 cache [KB]}} &  &  &  & 32, 8-way \\ \hline
+\multicolumn{1}{|l|}{\textbf{L3 cache [KB]}} &  &  &  & 256, 8-way \\ \hline
 \multicolumn{1}{|l|}{\textbf{RAM [GB]}} & 192 & 512 & 128 & 512 \\ \hline
 \multicolumn{1}{|l|}{\textbf{TDP [W]}} & 140 & 180 & 70 & 190 \\ \hline
 \multicolumn{1}{|l|}{\textbf{Processor price [USD]}} & 2450 & 3743 & 300 & 1500 \\ \hline
@@ -29,7 +33,7 @@ the text below describes important architectural improvements introduced into th
 \multicolumn{5}{|c|}{Total bandwidth estimates (per node) [GBps]}  \\ \hline
 \multicolumn{1}{|l|}{\textbf{L1 (data) cache}} &  &  &  & 2803 \\ \hline
 \multicolumn{1}{|l|}{\textbf{L2 cache}} &  &  &  & 2803 \\ \hline
-\multicolumn{1}{|l|}{\textbf{L3}} &  &  &  & 3738 \\ \hline
+\multicolumn{1}{|l|}{\textbf{L3 cache}} &  &  &  & 3738 \\ \hline
 \multicolumn{1}{|l|}{\textbf{Total memory}} &  &  &  & 230 \\ \hline
 \multicolumn{1}{|l|}{\textbf{SMP interconnect}} &  &  &  & 38.4 \\ \hline
 \multicolumn{1}{|l|}{\textbf{PCIe interconnect}} &  &  &  & 128 \\ \hline
@@ -64,7 +68,6 @@ Hi1616 features several major microarchitectural improvements in memory performa
 
 \paragraph{Power8+ S822LC.}
 %% Although the IBM 8335 Power System S822LC for High Performance Computing server Model GTB (8335-GTB) was released in September 2016, it still remains one of the most interesting hardware platforms for HPC available at the market. This platform delivers breakthrough accelerated computing performance.
-Being designed for ``accelerated workloads in high-performance computing (HPC), high-performance data analytics (HPDA), enterprise data centers, and accelerated cloud deployments'' \cite{2015:power8,2016:power8}, IBM 8335 Power System S822LC for High Performance Computing server Model GTB (8335-GTB) perfectly suitsfor all kinds of GSS applications. % including preprocessing (e.g., creating synthetic populations and synthetic networks), simulation, HPDA, and visualization.
-S822LC brings together two POWER8 CPUs with four NVIDIA Tesla P100 GPUs through NVLink Technology.
+Being designed for ``accelerated workloads in high-performance computing (HPC), high-performance data analytics (HPDA), enterprise data centers, and accelerated cloud deployments'' \cite{2015:power8,2016:power8}, IBM 8335 Power System S822LC for High Performance Computing server Model GTB (8335-GTB) perfectly suits for all kinds of GSS applications. % including preprocessing (e.g., creating synthetic populations and synthetic networks), simulation, HPDA, and visualization.
+S822LC brings together two POWER8 CPUs with four NVIDIA Tesla P100 GPUs through novel NVLink Technology.
 %% NVLink is used to transfer data to GPUs, while actual instructions are still transferred to accelerators via PCIe.
-

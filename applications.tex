@@ -1,9 +1,38 @@
 \subsection{Representative GSS applications selected for the benchmark}
-Functionally, the  benchmarked  applications  can  be  categorized  into  two  groups: HPC-compliant social simulation software and large-scale CFD (Computational Fluid Dynamics) applications. From the perspective of programming languages, GSS benchmark covered applications written in C++ and Python, which are the most popular programming languages among GSS experts who use HPC.
+
 % The applications have been selected both from projects provided by the project and generally available in public repositories.
-This section contains a short description of tested applications: OpenSWPC, ABM4Py, CCTM, CM1, IPF, HWRF, Pandora/GG.
+Functionally, the benchmarked applications can be categorized into two groups: HPC-
+compliant social simulation software and large-scale CFD (Computational Fluid Dynamics)
+applications. From the perspective of programming languages, GSS benchmark covered ap-
+plications written in C++ and Python, which are the most popular programming languages
+among GSS experts who use HPC. This subsection contains a short description of tested appli-
+cations -- ABM4Py, Pandora/GG, IPF, OpenSWPC, CCTM, CM1, HWRF, -- and explains why
+these particular applications were selected for the benchmark.
+We refer the interested reader for further technical details to the reports \cite{2017:coegss_benchmark1,2018:coegss_benchmark2}.
 
 \subsubsection{HPC-compliant social simulation software}
+
+Since GSS deals with evaluating impact of different policies on the society, social simulations
+constitute a relevant part for the majority of workflows in large-scale GSS applications. Typical
+social simulation component consists of pre-processing, simulation, and post-processing steps.
+Agent-based modelling and simulation (ABMS) is the most widely accepted tool for the simulation step.
+Pre-processing step takes care of collecting and wrangling real-word data, as well as
+synthesizing inputs for ABMS. As long as fine-grained data about society are rarely available
+for public use, large-scale agent-based models usually require synthetic input data -- synthetic
+populations and synthetic social networks -- prepared on the base of partial and marginal information.
+Post-processing includes visualization, data analytics, model verification, validation
+and uncertainty quantification.
+
+In our benchmark, the group of social simulation software covers applications for pre-processing
+and simulation of agent-based models. In the benchmark definition, we intentionally
+skipped post-processing step as it frequently heavily depends on the concrete GSS problems in
+hand, so it is hard to determine typical use-cases and computational kernels for post-processing.
+We selected two ABMS frameworks -- \textsf{ABM4Py} is implemented in Python and follows
+graph-based ABMS methodology particularly suitable for large-scale social simulation, while \textsf{Parndora}
+is written in C++ and uses regular meshes to model environment. The pre-processing step is
+represented by HPC-compliant implementation of the IPF method for generating synthetic pop-
+ulations. The text below shortly describes each application and the specific inputs used into
+benchmark.
 
 \paragraph{ABM4Py} (ABMS for Python) is a distributed agent-based modelling and simulation framework for fast prototyping agent based components of GSS models \cite{2018:abm4py}.
 Agent-based models implemented in \textsf{ABM4Py} follow the graph-based representation \cite{2018:abm4py,2017:graph_abms}.
@@ -96,6 +125,25 @@ Application parameters \textit{PROCROWS, PROCCOLS, ROWBLOCK} and \textit{COLBLOC
 
 \subsubsection{Large-scale CFD applications}
 
+A wide variaty of GSS applications -- from evacuation planning [8] to air quality control [6] –
+rely on coupling of ABMS with CFD. The group of benchmarked CFD applications includes large
+scale tools that simulate GSS-related scenarios like natural disasters (hurricanes, earthquakes),
+spread of air pollution, and weather prediction. We selected 4 exemplar open-source codes for
+large-scale CFD simulations:
+\begin{itemize}
+\item OpenSWPC -- an integrated parallel simulation code for modelling seismic wave propaga-
+  tion in 3D heterogeneous viscoelastic media which is applicable for evacuation planning in
+  case of earthquakes;
+\item CMAQ -- a community multiscale air quality modelling system, which was successfully
+  used for conducting large scale air quality simulations and policy making for air pollution
+  control [6];
+\item CM1 -- a model for studying processes in the Earth’s atmosphere, which can be used
+  for weather prediction in different GSS applications where behaviour of agents in ABMS
+  component of GSS model depents on weather (e.g., predicting refugee destinations [19]);
+\item HRWF -- a parallel implementation of the hurricane weather research and forecasting (HWRF),
+  which is suitable for evacuation planning in case of hurricanes.
+\end{itemize}
+
 \paragraph{OpenSWPC} (Open-source Seismic Wave Propagation Code) is an open-source software fro large-scale simulation of seismic waves propagation (2D or 3D) by solving motion equations using the finite difference method (FDM) \cite{OpenSWPC2}. OpenSWPC is widely used in seismology. It ports easily and delivers good performance on different distributed systems varying from small PC clusters to large-scale supercomputers.
 \iffalse
 Without modifying the code, users can simulate seismic wave propagation using their own speed structure models and the necessary source representations in the input parameter file. The software code is equipped with a frequency-independent damping model based on a generalised Zener (standard linear solid - SLS model) body and an efficiently selected, perfectly matched boundary absorbing layer. It has different modes for the different input data types of the velocity structure model and different source representations, such as single force, torque tensioner and flat frequency, which can be easily selected by input parameters. Common binary data formats, a common network data form (NetCDF), and a seismic analysis code (SAC) are used to input a heterogeneous structure model and simulation results so that users can easily operate their input and output data sets. All codes are written in Fortran 2003 and are available with detailed documents in a public repository.
@@ -176,4 +224,4 @@ It is used to forecast the track and intensity of tropical cyclones.
 
 
 This document does not go further into theory as it is beyond its main subject.
-We refer the interested reader for more technical details to the reports \cite{2017:coegss_benchmark1,2018:coegss_benchmark2}.
+%% We refer the interested reader for more technical details to the reports \cite{2017:coegss_benchmark1,2018:coegss_benchmark2}.
