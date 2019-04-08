@@ -1,0 +1,56 @@
+\subsection{Measuring and reporting performance technique}
+\label{sec:measuring}
+
+In the process of preparing and launching the benchmark,
+we faced with a number of technical difficulties,
+which significantly influenced the approach
+we have chosen to measure and report performance.
+This subsection highlights our approach to tackling those difficulties.
+
+Since the analyzed testbeds represent brand new architectures,
+we encountered a limited number of tools for measuring metrics of interest
+which were strait available for all testbeds.
+In particular,
+many popular performance measuring tools -- VampirTrace, Scalasca, etc --
+were not ported to the ARM Hi1616 by the time of performing benchmark.
+Moreover, tested applications are written in different languages -- C/C++, Fortran, and Python --
+which reduces the range of performance measuring tools suitable for all applications at once.
+On the other hand, our study is focused on overall performance of the code
+and does not require instrumentation to measure and analyze performance.
+Thus, we decided to omit specialized benchmarking libraries (e.g., \textsf{LibSciBench} \cite{2015:Hoefler})
+and performance analysis tools (e.g., VampirTrace)
+in favor of standard Linux toolset available out-of-the-box.
+The metrics of interest were measured by means of \texttt{/usr/bin/time} Linux utility.
+This utility allows to measure the following metrics for the application as a whole and for each separate MPI process:
+total elapsed real time, number of filesystem inputs and outputs,
+maximum resident set size of the process,
+average total (data+stack+text) memory use of the process,
+etc.
+We used measurements of the above-mentioned metrics and the data from Table\,\ref{tab:clusterconfig}
+to compute dependent metrics (like TDP and TCO) and to build all charts and plots in this paper.
+%% All codes were compiled with gcc version 4.8.2 using -O3.
+
+In addition, we experienced issues with different orders of magnitude in elapsed times of the applications.
+Even though we adjusted the input files to keep the elapsed time scales closer for all application,
+we still had significant differences in total elapsed times between social simulation and CFD software:
+each individual benchmark for social simulation codes consumed less than 3 hours on any testbed,
+while benchmarks for some CFD application required more than 30 hours.
+The latter fact prevented us from performing many repetitions of time-consuming CFD application runs.
+More specifically, in order to reduce the number of repetitions, for each test configuration
+we started with 2 runs and repeated the experiment % proceed with new repetitions of the experiment
+until the ratio of the sample standard error to the sample mean of the elapsed time was less than 5\%.
+Since the number of measurements generated with this approach
+is sometimes insufficient to construct meaningful confidence interval as suggested in the performance reporting guidelines\,\cite{2015:Hoefler},
+Figures\,\ref{} and~\ref{} report sample means of the measurements without confidence interval.
+
+Last but not least,
+our testbeds were limited by 1-2 nodes,
+which is not enough to conduct full scalability experiments with some of the selected applications.
+In order to ovecome this obstacle,
+as a reference testbed we used the Eagle cluster equipped with @TODO nodes containing 2 Intel Haswell E5-2697 v3 CPUs with 16 cores each,
+where we performed tests up to reaching the scalability bound.
+It allowed us to get an impression on the scalability of the applications reflected in Tables\,\ref{tab:bottlenecks_hardware} and~\ref{tab:bottlenecks_cfd_hardware}.
+
+%% 5. availability of testbeds: some testbeds were available for a short time (couple of months);
+%% Last but not least, we did not manage to port HWRF to ARM Hi1616 and IBM Power8+ testbeds.
+
