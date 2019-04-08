@@ -28,7 +28,14 @@ average total (data+stack+text) memory use of the process,
 etc.
 We used measurements of the above-mentioned metrics and the data from Table\,\ref{tab:clusterconfig}
 to compute dependent metrics (like TDP and TCO) and to build all charts and plots in this paper.
-%% All codes were compiled with gcc version 4.8.2 using -O3.
+In order to keep conditions of the experiments even, % (cold caches),
+the system caches were flushed by calling
+\texttt{sync; echo 3 > /proc/sys/vm/drop\_caches} before each experiment.
+All C/C++ and Fortran codes were compiled with gcc version 5.4.0 using -O3.
+Python 3.5.2 was used as a Python interpreter for the ABM4Py application.
+
+%% http://coegss.eu/wp-content/uploads/2018/02/D5.7.pdf
+%% http://coegss.eu/wp-content/uploads/2018/11/D5.8.pdf
 
 In addition, we experienced issues with different orders of magnitude in elapsed times of the applications.
 Even though we adjusted the input files to keep the elapsed time scales closer for all application,
@@ -41,7 +48,7 @@ we started with 2 runs and repeated the experiment % proceed with new repetition
 until the ratio of the sample standard error to the sample mean of the elapsed time was less than 5\%.
 Since the number of measurements generated with this approach
 is sometimes insufficient to construct meaningful confidence interval as suggested in the performance reporting guidelines\,\cite{2015:Hoefler},
-Figures\,\ref{} and~\ref{} report sample means of the measurements without confidence interval.
+Figures\,\ref{fig:socapps_plots} and~\ref{fig:cfdapps_plots} report sample means of the measurements without confidence interval.
 
 Last but not least,
 our testbeds were limited by 1-2 nodes,
