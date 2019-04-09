@@ -1,26 +1,53 @@
-Benchmarks results have been obtained for all application and available processors combinations to be able to observe the real behaviour of the selected applications.
-Each test has been repeated twice with the measurements for minimum wall time selected to be reported. This section presents the most interesting findings and conclusions from these tests.%% are presented in Section~\ref{sec:}.
-
-The group of benchmarked social simulation software covers applications for pre-processing and simulation of agent-based models. Two typical pre-processing tasks have been considered: converting shape files to rasters and producing synthetic populations. The benchmarks have shown that conversion from shape files to rasters is very demanding in terms of RAM while I/O and CPU requirements are rather low. In order to study computational requirements to applications that generate synthetic populations, a simple parallel version of the celebrated iterative proportional fitting (IPF) method was implemented. This implementation heavily uses dense linear algebra kernels provided by a highly optimised ScaLAPACK library. The benchmarks demonstrate high performance of IPF on different architectures. Neither RAM, nor I/O of modern architectures are limiting factors for IPF performance. Along with ABMS pre-processing applications, a simple agent-based model of diffusion with the help of distributed ABMS frameworks following two different parallelization strategies for ABMs with raster inputs was benchmarked. The first framework (Pandora) written in C++ parallelises the simulation process via splitting of rasters on even pieces and distributing them between MPI processes, while the second framework (ABM4py) is a Python code, which implements the graph-based parallelization approach. Despite strong difference in parallelization strategies, in both cases, the observation delivered the same pattern: ABMS applications produce a big amount of output which has a strong negative impact on application performance. As a consequence, according to the "toy" ABMs, being I/O bound, current ABMS frameworks for HPC have moderate requirements to CPU performance. Nevertheless, it must be emphasised that the results can look differently for complex models with sophisticated agent activities and models which can be reduced to iterations with sparse-matrix dense-vector operations, thus, the benchmarks for ABMS frameworks are not very illuminative and must be extended with more sophisticated models to draw stronger conclusions. But discussion of the new ABMS models for benchmarking goes beyond the scope of this text. Table~\ref{tab:bottlenecks_hardware} shortly summarises information about scalability of the benchmarked social simulation software and hardware bottlenecks.
+%% This section analyze results of the benchmark and highlights the most interesting findings. %% are presented in Section~\ref{sec:}.
+Figures\,\ref{fig:socapps_plots} and~\ref{fig:cfdapps_plots} summarize major benchmarking results
+for social science and CFD applications respectively.
+For each application, we include two plots:
+the first one -- scalability plot -- illustrates the change
+in the total ellapsed time with the grows of the number of MPI processes for all testbeds,
+whereas the second one -- metrics plot -- present all metrics measured for Intel Xeon Gold 6140 with different number of MPI processes.
+Intel Xeon Gold 6140 has been  chosen to report details on measured metrics 
+since it demonstrated the best performance compared to other testbeds (see Section\,\ref{sec:summary}).
+Reports \cite{2017:coegss_benchmark1,2018:coegss_benchmark2} contain the same information
+for other testbeds besides Intel Xeon Gold 6140.
+Both figures\,\ref{fig:socapps_plots} and~\ref{fig:cfdapps_plots} share identical legends.
+Note that scalability plot for HWRF application (Figure\,\ref{fig:hwrf_scalability}) lacks information about ARM Hi1616 and IBM Power8+.
+We failed to port HWRF on those architectures.
 
 \include{socapps_plots}
 \include{cfdapps_plots}
+
+The group of benchmarked social simulation software covers applications for pre-processing and simulation of agent-based models.
+In order to study computational requirements to applications that generate synthetic populations,
+a simple parallel version of the celebrated iterative proportional fitting (IPF) method was implemented.
+This implementation heavily uses dense linear algebra kernels provided by a highly optimised ScaLAPACK library.
+The benchmarks demonstrate high performance of IPF on different architectures.
+Neither RAM, nor I/O of modern architectures are limiting factors for IPF performance.
+Along with ABMS pre-processing applications,
+a simple agent-based model of diffusion with the help of distributed ABMS frameworks
+following two different parallelization strategies for ABMs with raster inputs was benchmarked.
+The first framework (Pandora) written in C++ parallelises
+the simulation process via splitting of rasters on even pieces and distributing them between MPI processes,
+while the second framework (ABM4py) is a Python code,
+which implements the graph-based parallelization approach.
+Despite strong difference in parallelization strategies, in both cases, the observation delivered the same pattern:
+ABMS applications produce a big amount of output which has a strong negative impact on application performance.
+As a consequence, according to the "toy" ABMs, being I/O bound, current ABMS frameworks for HPC have moderate requirements to CPU performance. Nevertheless, it must be emphasised that the results can look differently for complex models with sophisticated agent activities and models which can be reduced to iterations with sparse-matrix dense-vector operations, thus, the benchmarks for ABMS frameworks are not very illuminative and must be extended with more sophisticated models to draw stronger conclusions. But discussion of the new ABMS models for benchmarking goes beyond the scope of this text. Table~\ref{tab:bottlenecks_hardware} shortly summarises information about scalability of the benchmarked social simulation software and hardware bottlenecks.
 
 \begin{table}[htbp]
 \begin{minipage}{1\textwidth}
 \caption{Bottlenecks in the hardware and scalability for the application from social simulation software stack}
 \label{tab:bottlenecks_hardware}
 \end{minipage}
-\begin{tabular}{cl|c|c|c|c|c|}
-\cline{3-7}
- &  & \multicolumn{2}{c|}{pre-processing} & \multicolumn{3}{c|}{ABMS (with raster input)} \\ \cline{3-7} 
- &  & \multirow{2}{*}{rastering} & \multirow{2}{*}{IPF} & \multicolumn{2}{c|}{Pandora} & \multicolumn{1}{l|}{ABM4py} \\ \cline{5-7} 
- &  &  &  & \multicolumn{1}{l|}{Europe} & \multicolumn{1}{l|}{World} & \multicolumn{1}{l|}{128x128} \\ \hline
-\multicolumn{1}{|c|}{\multirow{4}{*}{Bottlenecks}} & CPU &  & \checkmark &  &  &  \\ \cline{2-7} 
-\multicolumn{1}{|c|}{} & RAM &  &  &  &  &  \\ \cline{2-7} 
-\multicolumn{1}{|c|}{} & IO &  &  & output & output & output \\ \cline{2-7} 
-\multicolumn{1}{|c|}{} & Network & N.A. &  &  &  &  \\ \hline
-\multicolumn{2}{|c|}{Scalability \ *} & serial & $\ge$1400 &  $\approx$128 & $\approx$700 & $\approx$128 \\ \hline
+\begin{tabular}{cl|c|c|c|c|}
+\cline{3-6}
+ &  & {pre-processing} & \multicolumn{3}{c|}{ABMS (with raster input)} \\ \cline{3-6} 
+ &  & \multirow{2}{*}{IPF} & \multicolumn{2}{c|}{Pandora} & \multicolumn{1}{l|}{ABM4py} \\ \cline{4-6} 
+ &  &  & \multicolumn{1}{l|}{Europe} & \multicolumn{1}{l|}{World} & \multicolumn{1}{l|}{128x128} \\ \hline
+\multicolumn{1}{|c|}{\multirow{4}{*}{Bottlenecks}} & CPU & \checkmark &  &  &  \\ \cline{2-6} 
+\multicolumn{1}{|c|}{} & RAM &  &  &  &  \\ \cline{2-6} 
+\multicolumn{1}{|c|}{} & IO  &  & output & output & output \\ \cline{2-6} 
+\multicolumn{1}{|c|}{} & Network&  &  &  &  \\ \hline
+\multicolumn{2}{|c|}{Scalability \ *} & $\ge$1400 &  $\approx$128 & $\approx$700 & $\approx$128 \\ \hline
 \end{tabular}
 \newline
 \raggedright{* maximum\ number\ of\ utilised\ cores\ for\ Eagle\ cluster}

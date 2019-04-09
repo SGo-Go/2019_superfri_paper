@@ -1,13 +1,13 @@
 %% 1 row - IPF
-\begin{figure}[H]
+\begin{figure}[t]
   \centering
   \begin{subfigure}[t]{0.48\textwidth}
     \centering
     \begin{tikzpicture}[scale=1, baseline]
       \begin{customlegend}[legend columns=1,legend style={font=\tiny, column sep=2ex},
-          legend entries={Eagle/Intel\textregistered\ Xeon\textregistered\ E5-2697 v3,
+          legend entries={Eagle/Intel\ Xeon\ E5-2697 v3,
             ARM Hi1616,
-            Intel\textregistered\ Xeon\textregistered\ Gold 6140,
+            Intel\ Xeon\ Gold 6140,
             AMD Epyc 7551,
             Power8+ S822LC
         }]
@@ -43,7 +43,7 @@
           log ticks with fixed point,
           scaled y ticks=real:1e3
           axis lines = left,
-          %xlabel = \#MPI ranks,
+          xlabel = \#MPI ranks,
           ylabel = {Walltime [s]},
           legend style={at={(0.5,-0.2)},
             anchor=north,legend columns=1},
@@ -66,7 +66,7 @@
           mark=*,
         ]
         coordinates {                   (1,891.2)(4,185.8)(8,91.8)(9,58.7)(16,41.7)(18,37.3)(36,23.3)(64,20.6)(72,18.8)(121,27.2)(144,30.1)};
-        %                \addlegendentry{Intel\textregistered\ Xeon\textregistered\ Gold 6140}
+        %                \addlegendentry{Intel\ Xeon\ Gold 6140}
         %AMD Epyc
         \addplot [
           domain=1:150, 
@@ -84,7 +84,7 @@
         ]
         coordinates {                    (1,618.9)(4,161.5)(9,74.3)(16,44.2)(28,26.6)(56,18.6)(64,13.8)(112,14.9)(121,10.2)(700,3.7)(1400,5.2)
         };
-        %               \addlegendentry{Eagle/Intel\textregistered\ Xeon\textregistered\ E5-2697 v3}
+        %               \addlegendentry{Eagle/Intel\ Xeon\ E5-2697 v3}
         %Power
         \addplot [
           domain=1:150, 
@@ -107,7 +107,7 @@
           %    width=1\textwidth,
           axis y line*=left,
           axis lines = left,
-          %%xlabel = \#MPI ranks,
+          xlabel = \#MPI ranks,
           ylabel = {Walltime [s]},
           xmajorgrids=true,
           ymajorgrids=true,
@@ -166,13 +166,13 @@
         %                   \addlegendentry{No. of system file outputs}
       \end{axis}
     \end{tikzpicture}
-    \caption{IPF on Intel\textregistered\ Xeon\textregistered\ Gold 6140}
+    \caption{IPF on Intel\ Xeon\ Gold 6140}
     \label{fig:ipf_intel_gold}
   \end{subfigure}\bigbreak
   %      \caption{Results for IPF}
   %\end{figure}
 
-  %% 2 row - Pandora/GG
+  %% 2 row - \textsf{Pandora}/GG
   %\begin{figure}[ht]
   %\centering
   \begin{subfigure}[t]{0.48\textwidth}
@@ -183,7 +183,7 @@
           log ticks with fixed point,
           scaled y ticks=real:1e3
           axis lines = left,
-          %xlabel = \#MPI ranks,
+          xlabel = \#MPI ranks,
           ylabel = {Walltime [s]},
           %            legend style={at={(0.5,-0.2)},
           %            	    anchor=north,legend columns=1},
@@ -206,7 +206,7 @@
           mark=*,
         ]
         coordinates {                   (1,5253.9)(4,3005.9)(8,1960.8)(9,1911.8)(16,1369.7)(18,1180.8)(36,823.6)(64,614.9)(72,546.6)(121,620.0)(144,685.8)};
-        %                \addlegendentry{Intel\textregistered\ Xeon\textregistered\ Gold 6140}
+        %                \addlegendentry{Intel\ Xeon\ Gold 6140}
         %AMD Epyc
         \addplot [
           domain=1:150, 
@@ -224,7 +224,7 @@
         ]
         coordinates {                    (1,7158.7)(4,5493.6)(9,3552.1)(16,2720.5)(28,2033)(56,1291.2)(64,1099.1)(112,763.1)(121,706.3)(224,661.7)(1400,853.4)
         };
-        %                \addlegendentry{Eagle/Intel\textregistered\ Xeon\textregistered\ E5-2697 v3}
+        %                \addlegendentry{Eagle/Intel\ Xeon\ E5-2697 v3}
         %Power
         \addplot [
           domain=1:150, 
@@ -237,7 +237,7 @@
         %                \addlegendentry{Power8+ S822LC}
       \end{axis}
     \end{tikzpicture}
-    \caption{Pandora/GG scalability (WW map)}
+    \caption{\textsf{Pandora}/GG scalability}
     \label{fig:pandora_scalability}
   \end{subfigure}\hfill
   \begin{subfigure}[t]{0.48\textwidth}
@@ -247,7 +247,7 @@
           %    width=1\textwidth,
           axis y line*=left,
           axis lines = left,
-          %xlabel = \#MPI ranks,
+          xlabel = \#MPI ranks,
           ylabel = {Walltime [s]},
           xmajorgrids=true,
           ymajorgrids=true,
@@ -306,15 +306,13 @@
         %                    \addlegendentry{No. of system file outputs}
       \end{axis}
     \end{tikzpicture}
-    \caption{Pandora/GG on Intel\textregistered\ Xeon\textregistered\ Gold 6140}
+    \caption{\textsf{Pandora}/GG on Intel\ Xeon\ Gold 6140}
     \label{fig:pandora_intel_gold}
   \end{subfigure}\bigbreak
-  %      \caption{Results for Pandora/GG (worldwide map)}
+  %      \caption{Results for \textsf{Pandora}/GG (worldwide map)}
   %\end{figure}
 
-
-
-  %% 3 row - ABMS4py
+  %% 3 row - \textsf{ABM4py}
   %\begin{figure}[ht]
   %\centering
   \begin{subfigure}[t]{0.48\textwidth}
@@ -325,7 +323,7 @@
           log ticks with fixed point,
           scaled y ticks=real:1e3
           axis lines = left,
-          %xlabel = \#MPI ranks,
+          xlabel = \#MPI ranks,
           ylabel = {Walltime [s]},
           %            legend style={at={(0.5,-0.2)},
           %            	    anchor=north,legend columns=1},
@@ -348,7 +346,7 @@
           mark=*,
         ]
         coordinates {                   (1,3071.5)(4,86.9)(9,12.9)(16,12.1)(64,12.0)(121,33.5)};
-        %                \addlegendentry{Intel\textregistered\ Xeon\textregistered\ Gold 6140}
+        %                \addlegendentry{Intel\ Xeon\ Gold 6140}
         %AMD Epyc
         \addplot [
           domain=1:150, 
@@ -366,7 +364,7 @@
         ]
         coordinates {                    (1,6077.3)(4,287)(9,96.7)(16,28)(64,12.8)(112,86.4)(121,102)(280,104.9)
         };
-        %                \addlegendentry{Eagle/Intel\textregistered\ Xeon\textregistered\ E5-2697 v3}
+        %                \addlegendentry{Eagle/Intel\ Xeon\ E5-2697 v3}
         %Power
         \addplot [
           domain=1:150, 
@@ -379,7 +377,7 @@
         %                \addlegendentry{Power8+ S822LC}
       \end{axis}
     \end{tikzpicture}
-    \caption{ABMS4py scalability}
+    \caption{\textsf{ABM4py} scalability}
     \label{fig:abms_scalability}
   \end{subfigure}\hfill
   \begin{subfigure}[t]{0.48\textwidth}
@@ -389,7 +387,7 @@
           %    width=1\textwidth,
           axis y line*=left,
           axis lines = left,
-          %xlabel = \#MPI ranks,
+          xlabel = \#MPI ranks,
           ylabel = {Walltime [s]},
           xmajorgrids=true,
           ymajorgrids=true,
@@ -448,9 +446,9 @@
         %                    \addlegendentry{No. of system file outputs}
       \end{axis}
     \end{tikzpicture}
-    \caption{ABMS4py Intel\textregistered\ Xeon\textregistered\ Gold 6140}
+    \caption{\textsf{ABM4py} Intel\ Xeon\ Gold 6140}
     \label{fig:abms_intel_gold}
   \end{subfigure}\bigbreak
-  \label{fig:socapps_plots}
   \caption{Results for social simulation applications}
+  \label{fig:socapps_plots}
 \end{figure}
