@@ -27,10 +27,10 @@ the text below describes important architectural improvements introduced into th
 \multicolumn{1}{|l|}{\textbf{No. of nodes}} & 2 & 1 & 2 & 1 \\ \hline
 \multicolumn{1}{|l|}{\textbf{Cores per node}} & 36 & 64 & 64 & 20 \\ \hline
 \multicolumn{1}{|l|}{\textbf{CPU Frequency [GHz]}} & 2.3 & 2 & 2.4 & 2.92 \\ \hline
-\multicolumn{1}{|l|}{\textbf{L1 (data) cache}} & 1.125 MB &  2 MB & 1 MB & 1.25 MB \\ \hline
-\multicolumn{1}{|l|}{\textbf{L2 cache}} & 36 MB & 32 MB & 8MB & 10 MB \\ \hline
-\multicolumn{1}{|l|}{\textbf{L3 cache}} & 49.5 MB & 128 MB & 32 MB & 160 MB \\ \hline
-\multicolumn{1}{|l|}{\textbf{Mem type (channels)}} & DDR4-2666 (6) & DDR4-2400 (8) & DDR4-2400 (4) & ??? (4) \\ \hline
+\multicolumn{1}{|l|}{\textbf{L1 (data) cache}} & 1.125 MB &  2 MB & 2 MB & 1.25 MB \\ \hline
+\multicolumn{1}{|l|}{\textbf{L2 cache}} & 36 MB & 32 MB & 16 MB & 10 MB \\ \hline
+\multicolumn{1}{|l|}{\textbf{L3 cache}} & 49.5 MB & 128 MB & 64 MB & 160 MB \\ \hline
+\multicolumn{1}{|l|}{\textbf{Mem type (channels)}} & DDR4-2666 (6) & DDR4-2400 (8) & DDR4-2400 (4) & DDR3-1333 (4) \\ \hline
 \multicolumn{1}{|l|}{\textbf{RAM [GB]}} & 192 & 512 & 128 & 512 \\ \hline
 \multicolumn{1}{|l|}{\textbf{TDP [W]}} & 140 & 180 & 70 & 190 \\ \hline
 \multicolumn{1}{|l|}{\textbf{Processor price [USD]}} & 2450 & 3743 & 300 & 1500 \\ \hline
@@ -38,9 +38,9 @@ the text below describes important architectural improvements introduced into th
 \multicolumn{1}{|l|}{\textbf{I/O and disks}} & SSD & SSD & SSD & SSD \\ \hline
 \multicolumn{1}{|l|}{\textbf{OS version}} & Ubuntu 16.04.03 LTS & \multicolumn{1}{c|}{CentOS 6.9} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}l@{}}EulerOS release 2.0 (SP2),\\ Ubuntu 16.04.3 LTS\end{tabular}} & \multicolumn{1}{c|}{Ubuntu 16.04.2 LTS} \\ \hline
 \multicolumn{5}{|c|}{Total bandwidth estimates (per node) [GBps]}  \\ \hline
-\multicolumn{1}{|l|}{\textbf{L1 (data) cache}} & 15897 & 6144 & 7372 & 2803 \\ \hline
-\multicolumn{1}{|l|}{\textbf{L2 cache}} & 5299 & 8192 & 7372 & 2803 \\ \hline
-\multicolumn{1}{|l|}{\textbf{L3 cache}} & 5299 & 8192 & 9830 & 3738 \\ \hline
+\multicolumn{1}{|l|}{\textbf{L1 (data) cache}} & 15897 & 6144 & 19660 & 2803 \\ \hline
+\multicolumn{1}{|l|}{\textbf{L2 cache}} & 5299 & 8192 & 19660 & 2803 \\ \hline
+\multicolumn{1}{|l|}{\textbf{L3 cache}} & 5299 & 8192 & 19660 & 3738 \\ \hline
 \multicolumn{1}{|l|}{\textbf{Total memory}} & 119.21 & 158.95 & 71.53 & 230 \\ \hline
 \multicolumn{1}{|l|}{\textbf{SMP interconnect}} &  &  &  & 38.4 \\ \hline
 \multicolumn{1}{|l|}{\textbf{PCIe interconnect}} & 192 & 256 & 184 & 128 \\ \hline
