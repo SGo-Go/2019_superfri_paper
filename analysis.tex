@@ -1,5 +1,5 @@
 %% This section analyze results of the benchmark and highlights the most interesting findings. %% are presented in Section~\ref{sec:}.
-Figures\,\ref{fig:socapps_plots} and~\ref{fig:cfdapps_plots} summarize major benchmarking results
+Figures~\ref{fig:socapps_plots} and~\ref{fig:cfdapps_plots} summarize major benchmarking results
 for social science and CFD applications respectively.
 For each application, we include two plots:
 the first one -- scalability plot -- illustrates the change
@@ -7,10 +7,10 @@ in the total ellapsed time with the grows of the number of MPI processes for all
 whereas the second one -- metrics plot -- present all metrics measured for Intel Xeon Gold 6140 with different number of MPI processes.
 Intel Xeon Gold 6140 has been  chosen to report details on measured metrics 
 since it demonstrated the best performance compared to other testbeds (see Section\,\ref{sec:summary}).
-Reports \cite{2017:coegss_benchmark1,2018:coegss_benchmark2} contain the same information
-for other testbeds besides Intel Xeon Gold 6140.
-Both figures\,\ref{fig:socapps_plots} and~\ref{fig:cfdapps_plots} share identical legends.
-Note that scalability plot for HWRF application (Figure\,\ref{fig:hwrf_scalability}) lacks information about ARM Hi1616 and IBM Power8+.
+Besides plots for Intel Xeon Gold 6140,
+reports \cite{2017:coegss_benchmark1} and \cite{2018:coegss_benchmark2} contain similar plots and supplementary information for the remaining testbeds.
+Both Figures~\ref{fig:socapps_plots} and~\ref{fig:cfdapps_plots} share identical legends.
+Note that scalability plot for HWRF application (Figure~\ref{fig:hwrf_scalability}) lacks information about ARM Hi1616 and IBM Power8+.
 We failed to port HWRF on those architectures.
 
 \subsection{HPC-compliant social simulation software}
@@ -44,7 +44,7 @@ and for simpler models which can be reduced to iterative applying of sparse matr
 (e.g., random surfer model and PageRank).
 Thus, our benchmarks for ABMS frameworks are not very illuminative
 and must  be  extended  with  more sophisticated and more simple models to provide more evidences and draw stronger conclusions.
-But discussion of the new ABMS models for benchmarking goes beyond the scope of this text.
+But discussion of the new representative ABMS models for benchmarking goes beyond the scope of this text.
 
 Table~\ref{tab:bottlenecks_hardware} shortly summarizes information about scalability of the benchmarked social simulation software
 and about hardware bottlenecks discussed in this subsection.
@@ -71,27 +71,38 @@ and about hardware bottlenecks discussed in this subsection.
 %% As a consequence, according to the "toy" ABMs, being I/O bound, current ABMS frameworks for HPC have moderate requirements to CPU performance. Nevertheless, it must be emphasised that the results can look differently for complex models with sophisticated agent activities and models which can be reduced to iterations with sparse-matrix dense-vector operations, thus, the benchmarks for ABMS frameworks are not very illuminative and must be extended with more sophisticated models to draw stronger conclusions. But discussion of the new ABMS models for benchmarking goes beyond the scope of this text. Table~\ref{tab:bottlenecks_hardware} shortly summarises information about scalability of the benchmarked social simulation software and hardware bottlenecks.
 
 \begin{table}[htbp]
-\begin{minipage}{1\textwidth}
-\caption{Bottlenecks in the hardware and scalability for the application from social simulation software stack}
+%% \begin{minipage}{1\textwidth}
+\caption{Bottlenecks in the hardware and scalability of the benchmarked applications}
+%% \caption{Bottlenecks in the hardware and scalability for the application from social simulation software stack}
 \label{tab:bottlenecks_hardware}
-\end{minipage}
+%% \end{minipage}
+%% \begin{adjustbox}{width=1\textwidth}
+%% \small
 \begin{tabular}{cl|c|c|c|c|}
 \cline{3-6}
- &  & {pre-processing} & \multicolumn{3}{c|}{ABMS (with raster input)} \\ \cline{3-6} 
+ &  & \multicolumn{4}{c|}{Social simulation software} \\ \cline{3-6} 
  &  & \multirow{2}{*}{IPF} & \multicolumn{2}{c|}{\textsf{Pandora}} & \multicolumn{1}{l|}{\textsf{ABM4Py}} \\ \cline{4-6} 
  &  &  & \multicolumn{1}{l|}{Europe} & \multicolumn{1}{l|}{World} & \multicolumn{1}{l|}{128x128} \\ \hline
-\multicolumn{1}{|c|}{\multirow{4}{*}{Bottlenecks}} & CPU & \checkmark &  &  &  \\ \cline{2-6} 
+\multicolumn{1}{|c|}{\multirow{4}{*}{\rotatebox{90}{Bottlenecks}}} & CPU & \checkmark &  &  &  \\ \cline{2-6} 
 \multicolumn{1}{|c|}{} & RAM &  &  &  &  \\ \cline{2-6} 
-\multicolumn{1}{|c|}{} & IO  &  & output & output & output \\ \cline{2-6} 
-\multicolumn{1}{|c|}{} & Network&  &  &  &  \\ \hline
+\multicolumn{1}{|c|}{} & Inputs  &  & & & \\ \cline{2-6} 
+\multicolumn{1}{|c|}{} & Outputs &  & \checkmark & \checkmark & \checkmark \\ \hline
 \multicolumn{2}{|c|}{Scalability \ *} & $\ge$1400 &  $\approx$128 & $\approx$700 & $\approx$64 \\ \hline
 \end{tabular}
+%\end{adjustbox}
 \newline
 \raggedright{\footnotesize{
     $^*$ maximum\ number\ of\ utilised\ cores\ for\ Eagle\ cluster;
     $^{**}$ .
 }}
 \end{table}
+
+%% \multicolumn{1}{|c|}{\multirow{4}{*}{\rotatebox{90}{Bottlenecks}}} & CPU & \checkmark & \checkmark & \checkmark & \checkmark \\ \cline{2-6} 
+%% \multicolumn{1}{|c|}{} & RAM &  & \checkmark &  &  \\ \cline{2-6} 
+%% \multicolumn{1}{|c|}{} & Input & \checkmark &  &  &  \\ \cline{2-6} 
+%% \multicolumn{1}{|c|}{} & Output &  &  & \checkmark & \checkmark \\ \hline
+%% \multicolumn{2}{|c|}{Scalability *} & $\ge$128 & $\ge$128 & $\ge$128 & $\ge$128 \\ \hline
+
 
 \subsection{Large-scale CFD applications}
 
@@ -107,11 +118,11 @@ As expected, the benchmarks confirm that CFD applications are in general CPU-bou
 \end{minipage}
 \begin{tabular}{cl|c|c|c|c|}
 \cline{3-6}
- &  & HWRF & OpenSWPC & CMAQ/CCTM) & \multicolumn{1}{l|}{CM1} \\ \hline
-\multicolumn{1}{|c|}{\multirow{4}{*}{Bottlenecks}} & CPU & \checkmark & \checkmark & \checkmark & \checkmark \\ \cline{2-6} 
+ &  & HWRF & OpenSWPC & CMAQ/CCTM & \multicolumn{1}{l|}{CM1} \\ \hline
+\multicolumn{1}{|c|}{\multirow{4}{*}{\rotatebox{90}{Bottlenecks}}} & CPU & \checkmark & \checkmark & \checkmark & \checkmark \\ \cline{2-6} 
 \multicolumn{1}{|c|}{} & RAM &  & \checkmark &  &  \\ \cline{2-6} 
-\multicolumn{1}{|c|}{} & IO & input &  & output & output \\ \cline{2-6} 
-\multicolumn{1}{|c|}{} & Network &  &  &  &  \\ \hline
+\multicolumn{1}{|c|}{} & Input & \checkmark &  &  &  \\ \cline{2-6} 
+\multicolumn{1}{|c|}{} & Output &  &  & \checkmark & \checkmark \\ \hline
 \multicolumn{2}{|c|}{Scalability *} & $\ge$128 & $\ge$128 & $\ge$128 & $\ge$128 \\ \hline
 \end{tabular}
 \newline
@@ -119,7 +130,7 @@ As expected, the benchmarks confirm that CFD applications are in general CPU-bou
 \end{table}
 
 
-\subsection{Implications for hardware/software co-design}
+\subsection{Implications for the hardware/software co-design}
 
 As Tables ~\ref{tab:bottlenecks_hardware} and~\ref{tab:bottlenecks_cfd_hardware} illustrate, most of the distributed GSS applications are memory bound. Even large-scale CFD codes can be bound by I/O and RAM under special circumstances. It allows to formulate the conclusion that the fast memory is an essential requirement to HPC clusters for GSS applications whereas high CPU's clock frequency plays a less important role. Moreover, since many state-of-the-art GSS applications deal with large input and output files, it is believed that GSS software developers should invest more time into designing file-avoiding applications. The scalability tests show that hyperthreading provides little performance improvements for most of the GSS applications. Therefore, it makes little sense to invest money in expensive massively multithreaded chips (like Power8) for GSS users. It is also recommended to avoid clusters with GPU accelerated nodes since only few popular GSS applications benefit from GPUs. In particular, among widely used general-purpose ABMS frameworks and problem-specific ABMS codes for HPCs, only the FLAME-GPU (Flexible Larg-scale Agent Modelling Environment) \cite{2011:flame_gpu,2018:flame_gpu} framework utilises GPUs. Weak use of GPUs is also partially related to the fact that most social science applications are memory bound. Being more specific, among the architectures used in benchmarking, we recommend to build clusters upon ARM Hi1616 if energy efficiency is a crucial requirement, or upon Intel\textregistered\ Xeon\textregistered\ Gold 6140 if performance is a first priority while relatively high operating expense and capital expenditure are not an issue.
 

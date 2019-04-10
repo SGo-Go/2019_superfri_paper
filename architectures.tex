@@ -31,7 +31,7 @@ the text below describes important architectural improvements introduced into th
 \multicolumn{1}{|l|}{\textbf{RAM frequency [MHz]}} & 2666 & 2400 & 2400 & 1333 \\ \hline
 \multicolumn{1}{|l|}{\textbf{RAM capacity [GB]}} & 192 & 512 & 128 & 512 \\ \hline
 \multicolumn{1}{|l|}{\textbf{I/O and disks type}} & SSD & SSD & SSD & SSD \\ \hline
-\multicolumn{1}{|l|}{\textbf{Interconnect}} & 10Gb Ethernet & --$^*$ %\footnote{\label{singlenode}This testbed has a sigle node}
+\multicolumn{1}{|l|}{\textbf{Network}} & 10Gb Ethernet & --$^*$ %\footnote{\label{singlenode}This testbed has a sigle node}
 & 10Gb Ethernet & --$^*$ %\footref{singlenode}
 \\ \hline
 \multicolumn{1}{|l|}{\textbf{TDP [W]}} & 140 & 180 & 70 & 190 \\ \hline
@@ -49,8 +49,8 @@ the text below describes important architectural improvements introduced into th
 \end{adjustbox}
 \newline
 \raggedright{\footnotesize{
-    $^*$ These testbeds have a sigle node;
-    $^{**}$ All testbeds use PCIe interconnect, for duplex simply multiply be 2.
+    $^*$ These testbeds have only one node, therefore, network is not used in this case;\\
+    $^{**}$ All testbeds use PCIe interconnect, thus, for total I/O bandwidth at full-duplex simply multiply by 2.
 }}
 \end{table}
 
