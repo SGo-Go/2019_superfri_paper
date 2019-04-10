@@ -35,6 +35,7 @@
       \end{customlegend}
     \end{tikzpicture}
   \end{subfigure}\bigbreak
+
   \begin{subfigure}[t]{0.48\textwidth}
     \begin{tikzpicture}[scale=1, baseline]
       \begin{axis}[
@@ -172,6 +173,145 @@
   %      \caption{Results for IPF}
   %\end{figure}
 
+  %% 3 row - \textsf{ABM4Py}
+  %\begin{figure}[ht]
+  %\centering
+  \begin{subfigure}[t]{0.48\textwidth}
+    \begin{tikzpicture}[scale=1, baseline]
+      \begin{axis}[
+          xmode=log,
+          ymode=log,
+          log ticks with fixed point,
+          scaled y ticks=real:1e3
+          axis lines = left,
+          xlabel = \#MPI ranks,
+          ylabel = {Walltime [s]},
+          %            legend style={at={(0.5,-0.2)},
+          %            	    anchor=north,legend columns=1},
+          xmajorgrids=true,
+          ymajorgrids=true,
+          grid style=dashed,
+        ]
+        %ARM
+        \addplot [
+          domain=1:150, 
+          color=black,
+          mark=square,
+        ]
+        coordinates {                 (1,11463.3)(4,708.9)(9,239.5)(16,62.9)(64,13.9)(121,7.4)};
+        %                \addlegendentry{ARM Hi1616}
+        %Intel 6140
+        \addplot [
+          domain=1:150, 
+          color=black,
+          mark=*,
+        ]
+        coordinates {                   (1,3071.5)(4,86.9)(9,12.9)(16,12.1)(64,12.0)(121,33.5)};
+        %                \addlegendentry{Intel\ Xeon\ Gold 6140}
+        %AMD Epyc
+        \addplot [
+          domain=1:150, 
+          color=black,
+          mark=star,
+        ]
+        coordinates {
+          (1,8114.8)(4,450.3)(9,151.7)(16,49.0)(64,33.2)(128,164)};
+        %                \addlegendentry{AMD Epyc 7551}
+        %Eagle
+        \addplot [
+          domain=1:1400, 
+          color=black,
+          mark=otimes,
+        ]
+        coordinates {                    (1,6077.3)(4,287)(9,96.7)(16,28)(64,12.8)(112,86.4)(121,102)(280,104.9)
+        };
+        %                \addlegendentry{Eagle/Intel\ Xeon\ E5-2697 v3}
+        %Power
+        \addplot [
+          domain=1:150, 
+          color=black,
+          mark=|,
+        ]
+        coordinates {
+          (1,11751.7)(4,725.9)(9,237.9)(16,61.3)(25,99.8)(36,57.1)(49,53.8)(64,18.9)(81,53.7)(100,394.1)(121,407.3)
+        };
+        %                \addlegendentry{Power8+ S822LC}
+      \end{axis}
+    \end{tikzpicture}
+    \caption{\textsf{ABM4Py}/GG scalability}
+    \label{fig:abms_scalability}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=1, baseline]
+      \begin{axis}[
+          %    width=1\textwidth,
+          axis y line*=left,
+          axis lines = left,
+          xlabel = \#MPI ranks,
+          ylabel = {Walltime [s]},
+          xmajorgrids=true,
+          ymajorgrids=true,
+          grid style=dashed,
+          xmin=1, xmax=70,
+          ymode=log,
+          ymin=10, ymax=12000,
+        ]
+        %Execution time
+        \addplot [
+          domain=1:70, 
+          color=black,
+          mark=*,
+        ]
+        coordinates {                   (1,3071.5)(4,86.9)(9,12.9)(16,12.1)(64,12.0)(121,33.5)};
+        \label{abms_execution_time}
+      \end{axis}
+      \begin{axis}[
+          xmode=log,
+          ymode=log,
+          xticklabel=\empty,
+          axis y line*=right,
+          scaled ticks=false,
+          y tick label style={/pgf/number format/.cd,sci,sci e},
+          ymin=10000, ymax=5000000,
+          ylabel style={text width=3cm},
+          ylabel = {Memory use {[kB]} {/} No. of system file inputs/outputs},
+          %                legend style={at={(0.5,-0.2)},
+          %                	    anchor=north,legend columns=1},
+          grid style=dashed,
+        ]
+        \addlegendimage{/pgfplots/refstyle=abms_execution_time}
+        %                \addlegendentry{Execution time}
+        %RAM
+        \addplot [
+          domain=1:70, 
+          color=black,
+          mark=square,
+        ]
+        coordinates {(1,2316696)(4,695464)(9,265676)(16,283352)(121,138564)};
+        %              \addlegendentry{Memory use}
+        %#inputs
+        \addplot [
+          domain=1:70, 
+          color=black,
+          mark=star,
+        ]
+        coordinates {(1,175888)(4,175368)(9,174456)(16,174088)(121,150160)};
+        %               \addlegendentry{No. of system file inputs}
+        %#outputs
+        \addplot [
+          color=black,
+          mark=otimes,
+        ]
+        coordinates {(1,30360)(4,35384)(9,66448)(16,133160)(121,116104)};
+        %                    \addlegendentry{No. of system file outputs}
+      \end{axis}
+    \end{tikzpicture}
+    \caption{\textsf{ABM4Py}/GG Intel\ Xeon\ Gold 6140}
+    \label{fig:abms_intel_gold}
+  \end{subfigure}\bigbreak
+
+  
   %% 2 row - \textsf{Pandora}/GG
   %\begin{figure}[ht]
   %\centering
@@ -312,143 +452,6 @@
   %      \caption{Results for \textsf{Pandora}/GG (worldwide map)}
   %\end{figure}
 
-  %% 3 row - \textsf{ABM4py}
-  %\begin{figure}[ht]
-  %\centering
-  \begin{subfigure}[t]{0.48\textwidth}
-    \begin{tikzpicture}[scale=1, baseline]
-      \begin{axis}[
-          xmode=log,
-          ymode=log,
-          log ticks with fixed point,
-          scaled y ticks=real:1e3
-          axis lines = left,
-          xlabel = \#MPI ranks,
-          ylabel = {Walltime [s]},
-          %            legend style={at={(0.5,-0.2)},
-          %            	    anchor=north,legend columns=1},
-          xmajorgrids=true,
-          ymajorgrids=true,
-          grid style=dashed,
-        ]
-        %ARM
-        \addplot [
-          domain=1:150, 
-          color=black,
-          mark=square,
-        ]
-        coordinates {                 (1,11463.3)(4,708.9)(9,239.5)(16,62.9)(64,13.9)(121,7.4)};
-        %                \addlegendentry{ARM Hi1616}
-        %Intel 6140
-        \addplot [
-          domain=1:150, 
-          color=black,
-          mark=*,
-        ]
-        coordinates {                   (1,3071.5)(4,86.9)(9,12.9)(16,12.1)(64,12.0)(121,33.5)};
-        %                \addlegendentry{Intel\ Xeon\ Gold 6140}
-        %AMD Epyc
-        \addplot [
-          domain=1:150, 
-          color=black,
-          mark=star,
-        ]
-        coordinates {
-          (1,8114.8)(4,450.3)(9,151.7)(16,49.0)(64,33.2)(128,164)};
-        %                \addlegendentry{AMD Epyc 7551}
-        %Eagle
-        \addplot [
-          domain=1:1400, 
-          color=black,
-          mark=otimes,
-        ]
-        coordinates {                    (1,6077.3)(4,287)(9,96.7)(16,28)(64,12.8)(112,86.4)(121,102)(280,104.9)
-        };
-        %                \addlegendentry{Eagle/Intel\ Xeon\ E5-2697 v3}
-        %Power
-        \addplot [
-          domain=1:150, 
-          color=black,
-          mark=|,
-        ]
-        coordinates {
-          (1,11751.7)(4,725.9)(9,237.9)(16,61.3)(25,99.8)(36,57.1)(49,53.8)(64,18.9)(81,53.7)(100,394.1)(121,407.3)
-        };
-        %                \addlegendentry{Power8+ S822LC}
-      \end{axis}
-    \end{tikzpicture}
-    \caption{\textsf{ABM4py} scalability}
-    \label{fig:abms_scalability}
-  \end{subfigure}\hfill
-  \begin{subfigure}[t]{0.48\textwidth}
-    \centering
-    \begin{tikzpicture}[scale=1, baseline]
-      \begin{axis}[
-          %    width=1\textwidth,
-          axis y line*=left,
-          axis lines = left,
-          xlabel = \#MPI ranks,
-          ylabel = {Walltime [s]},
-          xmajorgrids=true,
-          ymajorgrids=true,
-          grid style=dashed,
-          xmin=1, xmax=70,
-          ymode=log,
-          ymin=10, ymax=12000,
-        ]
-        %Execution time
-        \addplot [
-          domain=1:70, 
-          color=black,
-          mark=*,
-        ]
-        coordinates {                   (1,3071.5)(4,86.9)(9,12.9)(16,12.1)(64,12.0)(121,33.5)};
-        \label{abms_execution_time}
-      \end{axis}
-      \begin{axis}[
-          xmode=log,
-          ymode=log,
-          xticklabel=\empty,
-          axis y line*=right,
-          scaled ticks=false,
-          y tick label style={/pgf/number format/.cd,sci,sci e},
-          ymin=10000, ymax=5000000,
-          ylabel style={text width=3cm},
-          ylabel = {Memory use {[kB]} {/} No. of system file inputs/outputs},
-          %                legend style={at={(0.5,-0.2)},
-          %                	    anchor=north,legend columns=1},
-          grid style=dashed,
-        ]
-        \addlegendimage{/pgfplots/refstyle=abms_execution_time}
-        %                \addlegendentry{Execution time}
-        %RAM
-        \addplot [
-          domain=1:70, 
-          color=black,
-          mark=square,
-        ]
-        coordinates {(1,2316696)(4,695464)(9,265676)(16,283352)(121,138564)};
-        %              \addlegendentry{Memory use}
-        %#inputs
-        \addplot [
-          domain=1:70, 
-          color=black,
-          mark=star,
-        ]
-        coordinates {(1,175888)(4,175368)(9,174456)(16,174088)(121,150160)};
-        %               \addlegendentry{No. of system file inputs}
-        %#outputs
-        \addplot [
-          color=black,
-          mark=otimes,
-        ]
-        coordinates {(1,30360)(4,35384)(9,66448)(16,133160)(121,116104)};
-        %                    \addlegendentry{No. of system file outputs}
-      \end{axis}
-    \end{tikzpicture}
-    \caption{\textsf{ABM4py} Intel\ Xeon\ Gold 6140}
-    \label{fig:abms_intel_gold}
-  \end{subfigure}\bigbreak
   \caption{Results for social simulation applications}
   \label{fig:socapps_plots}
 \end{figure}

@@ -27,23 +27,31 @@ the text below describes important architectural improvements introduced into th
 \multicolumn{1}{|l|}{\textbf{L1 (data) cache}} & 576 kB &  1 MB & 1 MB & 64 kB, 8-way \\ \hline
 \multicolumn{1}{|l|}{\textbf{L2 cache}} & 18 MB & 16MB & 8MB & 512 kB, 8-way \\ \hline
 \multicolumn{1}{|l|}{\textbf{L3 cache}} & 24.75 MB & 64 MB & 32 MB & 8 MB/core, 8-way \\ \hline
-\multicolumn{1}{|l|}{\textbf{Mem type (channels)}} & DDR4-2666 (6) & DDR4-2400 (8) & DDR4-2400 (4) & ??? (4) \\ \hline
-\multicolumn{1}{|l|}{\textbf{RAM [GB]}} & 192 & 512 & 128 & 512 \\ \hline
+\multicolumn{1}{|l|}{\textbf{RAM type (channels)}} & DDR4 (6) & DDR4 (8) & DDR4 (4) & DDR3 (4) \\ \hline
+\multicolumn{1}{|l|}{\textbf{RAM frequency [MHz]}} & 2666 & 2400 & 2400 & 1333 \\ \hline
+\multicolumn{1}{|l|}{\textbf{RAM capacity [GB]}} & 192 & 512 & 128 & 512 \\ \hline
+\multicolumn{1}{|l|}{\textbf{I/O and disks type}} & SSD & SSD & SSD & SSD \\ \hline
+\multicolumn{1}{|l|}{\textbf{Interconnect}} & 10Gb Ethernet & --$^*$ %\footnote{\label{singlenode}This testbed has a sigle node}
+& 10Gb Ethernet & --$^*$ %\footref{singlenode}
+\\ \hline
 \multicolumn{1}{|l|}{\textbf{TDP [W]}} & 140 & 180 & 70 & 190 \\ \hline
 \multicolumn{1}{|l|}{\textbf{Processor price [USD]}} & 2450 & 3743 & 300 & 1500 \\ \hline
-\multicolumn{1}{|l|}{\textbf{Interconnect desc.}} & 10Gb Ethernet & 10Gb Ethernet & 10Gb Ethernet & 10Gb Ethernet \\ \hline
-\multicolumn{1}{|l|}{\textbf{I/O and disks}} & SSD & SSD & SSD & SSD \\ \hline
 \multicolumn{1}{|l|}{\textbf{OS version}} & Ubuntu 16.04.03 LTS & \multicolumn{1}{c|}{CentOS 6.9} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}l@{}}EulerOS release 2.0 (SP2),\\ Ubuntu 16.04.3 LTS\end{tabular}} & \multicolumn{1}{c|}{Ubuntu 16.04.2 LTS} \\ \hline
-\multicolumn{5}{|c|}{Total bandwidth estimates (per node) [GBps]}  \\ \hline
+\multicolumn{5}{|c|}{\textbf{Total bandwidth estimates (per node) [GBps]}}  \\ \hline
 \multicolumn{1}{|l|}{\textbf{L1 (data) cache}} & 3974 & 6144 & 7372 & 2803 \\ \hline
 \multicolumn{1}{|l|}{\textbf{L2 cache}} & 3974 & 6144 & 7372 & 2803 \\ \hline
 \multicolumn{1}{|l|}{\textbf{L3 cache}} & 5298 & 8192 & 9830 & 3738 \\ \hline
 \multicolumn{1}{|l|}{\textbf{Total memory}} & 119.21 & 158.95 & 71.53 & 230 \\ \hline
-\multicolumn{1}{|l|}{\textbf{SMP interconnect}} &  &  &  & 38.4 \\ \hline
-\multicolumn{1}{|l|}{\textbf{PCIe interconnect}} & 192 & 256 & 184 & 128 \\ \hline
-\multicolumn{1}{|l|}{\textbf{I/O} (maximum theoretical)} &  &  &  & 64 (simplex) \\ \hline
+\multicolumn{1}{|l|}{\textbf{SMP interconnect}} & -- & -- & 48 & 38.4 \\ \hline
+%% \multicolumn{1}{|l|}{\textbf{PCIe interconnect}} & 192 & 256 & 184 & 128 \\ \hline
+\multicolumn{1}{|l|}{\textbf{I/O} (maximum theoretical, simplex$^{**}$)} & 96 & 128 & 92 & 64 \\ \hline
 \end{tabular}
 \end{adjustbox}
+\newline
+\raggedright{\footnotesize{
+    $^*$ These testbeds have a sigle node;
+    $^{**}$ All testbeds use PCIe interconnect, for duplex simply multiply be 2.
+}}
 \end{table}
 
 \paragraph{Intel\textregistered\ Xeon\textregistered\ Gold 6140 (SkyLake SP).}
