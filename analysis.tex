@@ -27,7 +27,7 @@ Neither  RAM, nor I/O of modern architectures are limiting factors for IPF perfo
 The reason of such good results is in a heavy use of highly optimised \textsf{ScaLAPACK} kernels in the IPF implementation.
 
 Along  with IPF,
-we benchmarked a green growth agent-based model of diffusion implementated in \textsf{ABM4Py} and \textsf{Pandora} frameworks.
+we benchmarked a green growth agent-based model (ABM) of diffusion implementated in \textsf{ABM4Py} and \textsf{Pandora} frameworks.
 %% distributed ABMS frameworks following two different parallelization strategies.
 %% The first framework -- \textsf{ABM4Py} -- implements the graph-based parallelization approach,
 %% while the second framework  -- \textsf{Pandora} --
@@ -70,68 +70,43 @@ and about hardware bottlenecks discussed in this subsection.
 %% ABMS applications produce a big amount of output which has a strong negative impact on application performance.
 %% As a consequence, according to the "toy" ABMs, being I/O bound, current ABMS frameworks for HPC have moderate requirements to CPU performance. Nevertheless, it must be emphasised that the results can look differently for complex models with sophisticated agent activities and models which can be reduced to iterations with sparse-matrix dense-vector operations, thus, the benchmarks for ABMS frameworks are not very illuminative and must be extended with more sophisticated models to draw stronger conclusions. But discussion of the new ABMS models for benchmarking goes beyond the scope of this text. Table~\ref{tab:bottlenecks_hardware} shortly summarises information about scalability of the benchmarked social simulation software and hardware bottlenecks.
 
-\begin{table}[htbp]
-%% \begin{minipage}{1\textwidth}
-\caption{Bottlenecks in the hardware and scalability of the benchmarked applications}
-%% \caption{Bottlenecks in the hardware and scalability for the application from social simulation software stack}
-\label{tab:bottlenecks_hardware}
-%% \end{minipage}
-%% \begin{adjustbox}{width=1\textwidth}
-%% \small
-\begin{tabular}{cl|c|c|c|c|}
-\cline{3-6}
- &  & \multicolumn{4}{c|}{Social simulation software} \\ \cline{3-6} 
- &  & \multirow{2}{*}{IPF} & \multicolumn{2}{c|}{\textsf{Pandora}} & \multicolumn{1}{l|}{\textsf{ABM4Py}} \\ \cline{4-6} 
- &  &  & \multicolumn{1}{l|}{Europe} & \multicolumn{1}{l|}{World} & \multicolumn{1}{l|}{128x128} \\ \hline
-\multicolumn{1}{|c|}{\multirow{4}{*}{\rotatebox{90}{Bottlenecks}}} & CPU & \checkmark &  &  &  \\ \cline{2-6} 
-\multicolumn{1}{|c|}{} & RAM &  &  &  &  \\ \cline{2-6} 
-\multicolumn{1}{|c|}{} & Inputs  &  & & & \\ \cline{2-6} 
-\multicolumn{1}{|c|}{} & Outputs &  & \checkmark & \checkmark & \checkmark \\ \hline
-\multicolumn{2}{|c|}{Scalability \ *} & $\ge$1400 &  $\approx$128 & $\approx$700 & $\approx$64 \\ \hline
-\end{tabular}
-%\end{adjustbox}
-\newline
-\raggedright{\footnotesize{
-    $^*$ maximum\ number\ of\ utilised\ cores\ for\ Eagle\ cluster;
-    $^{**}$ .
-}}
-\end{table}
-
-%% \multicolumn{1}{|c|}{\multirow{4}{*}{\rotatebox{90}{Bottlenecks}}} & CPU & \checkmark & \checkmark & \checkmark & \checkmark \\ \cline{2-6} 
-%% \multicolumn{1}{|c|}{} & RAM &  & \checkmark &  &  \\ \cline{2-6} 
-%% \multicolumn{1}{|c|}{} & Input & \checkmark &  &  &  \\ \cline{2-6} 
-%% \multicolumn{1}{|c|}{} & Output &  &  & \checkmark & \checkmark \\ \hline
-%% \multicolumn{2}{|c|}{Scalability *} & $\ge$128 & $\ge$128 & $\ge$128 & $\ge$128 \\ \hline
-
-
 \subsection{Large-scale CFD applications}
 
 The group of benchmarked CFD applications includes large scale tools that simulate GSS-related scenarios like natural disasters (hurricanes, earthquakes), spread of air pollution and weather prediction. More specifically, the following open-source CFD codes have been selected the benchmarking purposes: HRWF – a parallel implementation of the hurricane weather research and forecasting (HWRF); OpenSWPC – an integrated parallel simulation code for modelling seismic wave propagation in 3D heterogeneous viscoelastic media; CMAQ – a community multiscale air quality modelling system, which combines CFD codes for conducting large scale air quality model simulations.
 
-As expected, the benchmarks confirm that CFD applications are in general CPU-bound (e.g. Figure~\ref{fig:openswpc_scalability}) in contrast to the social simulation software. At the same, time output makes a solid contribution to the total elapsed time for such applications like CCTM and CM1 (e.g. Figure~\ref{fig:cm1_intel_gold}) which, in turn, imposed additional performance constraints on architectures with poor I/O speed. Nevertheless, it was observed that at some architectures memory was also a bottleneck for some choices of the number of MPI processes. In addition, it was noticed that OpenSWPC is memory bound for the small number of MPI processes. The relevant information about scalability of the benchmarked CFD applications and hardware bottlenecks is outlined it Table~\ref{tab:bottlenecks_cfd_hardware}.
-
-
-\begin{table}[hbtp]
-\begin{minipage}{1\textwidth}
-\caption{Bottlenecks in the hardware and scalability for the large-scale CFD applications}
-\label{tab:bottlenecks_cfd_hardware}
-\end{minipage}
-\begin{tabular}{cl|c|c|c|c|}
-\cline{3-6}
- &  & HWRF & OpenSWPC & CMAQ/CCTM & \multicolumn{1}{l|}{CM1} \\ \hline
-\multicolumn{1}{|c|}{\multirow{4}{*}{\rotatebox{90}{Bottlenecks}}} & CPU & \checkmark & \checkmark & \checkmark & \checkmark \\ \cline{2-6} 
-\multicolumn{1}{|c|}{} & RAM &  & \checkmark &  &  \\ \cline{2-6} 
-\multicolumn{1}{|c|}{} & Input & \checkmark &  &  &  \\ \cline{2-6} 
-\multicolumn{1}{|c|}{} & Output &  &  & \checkmark & \checkmark \\ \hline
-\multicolumn{2}{|c|}{Scalability *} & $\ge$128 & $\ge$128 & $\ge$128 & $\ge$128 \\ \hline
-\end{tabular}
-\newline
-\raggedright{* maximum\ number\ of\ utilised\ cores\ for\ Eagle\ cluster}
-\end{table}
-
+As expected, the benchmarks confirm that CFD applications are in general CPU-bound (e.g. Figure~\ref{fig:openswpc_scalability}) in contrast to the social simulation software. At the same, time output makes a solid contribution to the total elapsed time for such applications like CCTM and CM1 (e.g. Figure~\ref{fig:cm1_intel_gold}) which, in turn, imposed additional performance constraints on architectures with poor I/O speed. Nevertheless, it was observed that at some architectures memory was also a bottleneck for some choices of the number of MPI processes. In addition, it was noticed that OpenSWPC is memory bound for the small number of MPI processes. The relevant information about scalability of the benchmarked CFD applications and hardware bottlenecks is outlined it Table~\ref{tab:bottlenecks_hardware}.
 
 \subsection{Implications for the hardware/software co-design}
 
-As Tables ~\ref{tab:bottlenecks_hardware} and~\ref{tab:bottlenecks_cfd_hardware} illustrate, most of the distributed GSS applications are memory bound. Even large-scale CFD codes can be bound by I/O and RAM under special circumstances. It allows to formulate the conclusion that the fast memory is an essential requirement to HPC clusters for GSS applications whereas high CPU's clock frequency plays a less important role. Moreover, since many state-of-the-art GSS applications deal with large input and output files, it is believed that GSS software developers should invest more time into designing file-avoiding applications. The scalability tests show that hyperthreading provides little performance improvements for most of the GSS applications. Therefore, it makes little sense to invest money in expensive massively multithreaded chips (like Power8) for GSS users. It is also recommended to avoid clusters with GPU accelerated nodes since only few popular GSS applications benefit from GPUs. In particular, among widely used general-purpose ABMS frameworks and problem-specific ABMS codes for HPCs, only the FLAME-GPU (Flexible Larg-scale Agent Modelling Environment) \cite{2011:flame_gpu,2018:flame_gpu} framework utilises GPUs. Weak use of GPUs is also partially related to the fact that most social science applications are memory bound. Being more specific, among the architectures used in benchmarking, we recommend to build clusters upon ARM Hi1616 if energy efficiency is a crucial requirement, or upon Intel\textregistered\ Xeon\textregistered\ Gold 6140 if performance is a first priority while relatively high operating expense and capital expenditure are not an issue.
+
+\begin{table}[htbp]
+  \begin{minipage}{1\textwidth}
+    \caption{Bottlenecks in the hardware and scalability of the benchmarked applications}
+    \label{tab:bottlenecks_hardware}
+  \end{minipage}
+%% \begin{adjustbox}{width=1\textwidth}
+%% \small
+\begin{tabular}{cl|c|c|c|c|c|c|c|c|}
+  \cline{3-10}
+  &  & \multicolumn{4}{c|}{\bf Social simulation software} & \multicolumn{4}{c|}{\bf CFD software} \\ \cline{3-10} 
+  &  & \multirow{2}{*}{\small\bf IPF} & \multicolumn{2}{c|}{\small\bf\textsf{Pandora}} & \multicolumn{1}{l|}{\small\bf\textsf{ABM4Py}}
+  & \multirow{2}{*}{\small\bf HWRF} & \multirow{2}{*}{\small\bf OpenSWPC} & {\small\bf CMAQ} & \multirow{2}{*}{{\small\bf CM1}}\\ \cline{4-6} 
+  &  &  & \multicolumn{1}{l|}{\footnotesize\bf Europe} & \multicolumn{1}{l|}{\footnotesize\bf World} & \multicolumn{1}{l|}{\footnotesize\bf 128x128} & & & {\small\bf CCTM} & \\ \hline
+  \multicolumn{1}{|c|}{{\multirow{4}{*}{\rotatebox{90}{\bf Bottlenecks}}}} & {\bf CPU}
+  & \checkmark &  &  & & \checkmark & \checkmark & \checkmark & \checkmark \\ \cline{2-10}
+  \multicolumn{1}{|c|}{} & {\bf RAM}     &  &  &  &  &            & \checkmark &  & \\ \cline{2-10} 
+  \multicolumn{1}{|c|}{} & {\bf Inputs}  &  &  &  &  & \checkmark &            &  & \\ \cline{2-10}
+  \multicolumn{1}{|c|}{} & {\bf Outputs} &  & \checkmark & \checkmark & \checkmark  &  &  & \checkmark & \checkmark \\ \hline
+  \multicolumn{2}{|c|}{\bf Scalability$^*$}
+  & $\ge$1400 &  $\approx$128 & $\approx$700 & $\approx$64 & $\ge$128 & $\ge$128 & $\ge$128 & $\ge$128 \\ \hline
+\end{tabular}
+%\end{adjustbox}
+\newline
+\raggedright{\footnotesize{
+    $^*$ maximum number of CPU cores where we observed decrease in total elapsed time on Eagle cluster.
+}}
+\end{table}
+
+As Table~\ref{tab:bottlenecks_hardware} illustrates, most of the distributed GSS applications are memory bound. Even large-scale CFD codes can be bound by I/O and RAM under special circumstances. It allows to formulate the conclusion that the fast memory is an essential requirement to HPC clusters for GSS applications whereas high CPU's clock frequency plays a less important role. Moreover, since many state-of-the-art GSS applications deal with large input and output files, it is believed that GSS software developers should invest more time into designing file-avoiding applications. The scalability tests show that hyperthreading provides little performance improvements for most of the GSS applications. Therefore, it makes little sense to invest money in expensive massively multithreaded chips (like Power8) for GSS users. It is also recommended to avoid clusters with GPU accelerated nodes since only few popular GSS applications benefit from GPUs. In particular, among widely used general-purpose ABMS frameworks and problem-specific ABMS codes for HPCs, only the FLAME-GPU (Flexible Larg-scale Agent Modelling Environment) \cite{2011:flame_gpu,2018:flame_gpu} framework utilises GPUs. Weak use of GPUs is also partially related to the fact that most social science applications are memory bound. Being more specific, among the architectures used in benchmarking, we recommend to build clusters upon ARM Hi1616 if energy efficiency is a crucial requirement, or upon Intel\textregistered\ Xeon\textregistered\ Gold 6140 if performance is a first priority while relatively high operating expense and capital expenditure are not an issue.
 
 
