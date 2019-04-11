@@ -6,7 +6,7 @@ compliant social simulation software and large-scale CFD (Computational Fluid Dy
 applications. From the perspective of programming languages, GSS benchmark covered ap-
 plications written in C++ and Python, which are the most popular programming languages
 among GSS experts who use HPC. This subsection contains a short description of tested appli-
-cations -- ABM4Py, Pandora/GG, IPF, OpenSWPC, CCTM, CM1, HWRF, -- and explains why
+cations -- ABM4Py/GG, Pandora/GG, IPF, OpenSWPC, CCTM, CM1, HWRF, -- and explains why
 these particular applications were selected for the benchmark.
 We refer the interested reader for further technical details to the reports \cite{2017:coegss_benchmark1,2018:coegss_benchmark2}.
 
@@ -33,64 +33,6 @@ is written in C++ and uses regular meshes to model environment. The pre-processi
 represented by HPC-compliant implementation of the IPF method for generating synthetic pop-
 ulations. The text below shortly describes each application and the specific inputs used into
 benchmark.
-
-\paragraph{ABM4Py} (ABMS for Python) is a distributed agent-based modelling and simulation framework for fast prototyping agent based components of GSS models \cite{2018:abm4py}.
-Agent-based models implemented in \textsf{ABM4Py} follow the graph-based representation \cite{2018:abm4py,2017:graph_abms}.
-Namely, agents and loci of interactions are interconnected into a complicated dynamic network, and agent-based simulation reflects possible temporal evolution of this network.
-
-In order to benchmark this framework, we prepared a simple agent-based model within \textsf{ABM4Py} which implements random walk with simple interaction of agents.
-This toy model allows to measure the most relevant performance metrics for \textsf{ABM4Py} including elapsed time, I/O, waiting time, and synchronization time.
-In order to enable comparison of the \textsf{ABM4Py} framework with \textsf{Pandora} frameworks (see below), out toy model uses a 2D mesh as a topology of environment.
-More specifically, we test against two cases -- one where layer shape size is set to 64x64 and the second with a size of 128x128.
-% For both cases the possible numbers of MPI processes used were limited to square numbers (1,4,9,16...).
-
-\iffalse
-Two types of entities are created: location, as part of a spatial domain, and acting agents that follow some decision rule and interact with each other. The agents are distributed uniformly on a 2D area. The spatial proximity increases the likelihood of agents to get connected. Each agent has only one property "A", which is initiated as a random floating point number between 0 and 1 and is connected with other m agents.
-At each step the agents perform the same action pattern. If the average of all values "A" of all connected agents is less than 0.5, the agents draw a new property "A" for themselves. It is to observe if the global average of "A" is affected by the decision rule and, if so, how.
-This minimal example therefore contains a computational component per agent (action) and a communication component. The property "A" is synchronised via ghost agents between the processes.
-Depending on whether the focus is on weak or strong scaling, the example setup can adapt to the number of used processes.
-\fi
-
-\underline{Project repository}: \url{https://github.com/CoeGSS-Project/abm4py}
-
-\underline{Downloads}: \url{https://github.com/CoeGSS-Project/abm4py/archive/master.zip}
-
-\iffalse
-\underline{Use case description}
-
-The application is purely python-based code that requires several modules among which the most important is \textit{h5py} (pythonic interface to the HDF5 binary data format). It additionally requires \textit{class\_auxiliary.pyc,  class\_graph.pyc} and \textit{lib\_gcfabm.pyc} files containing the application's byte code. Additionally, the python environment has to be equipped with additional modules preinstalled such as \textit{numpy, mpi4py, matplotlib, pandas}, etc.
-\fi
-
-\paragraph{Pandora/GG} application serves for benchmarking \textsf{Pandora} agent-based modelling and simulation framework.
-In contrast to \textsf{ABM4Py}, \textsf{Pandora} supports only raster inputs
-which restricts this framework to agent-based models with 2D mesh as a topology of environment.
-On the other hand, \textsf{Pandora} is implemented in C++,
-which allows to reach higher performance compared to Python-based \textsf{ABM4Py} framework.
-
-Our Pandora/GG application implements the green growth agent-based model, first proposed in \cite{2017:gg_pilot}, within \textsf{Pandora} framework.
-%Green Growth using Pandora library
-The green growth model is an innovation-diffusion model for electric cars with a global scope and a fine-scale spatial data resolution.
-%% The model is agent-based and is studying the car-centered global system in view of a green growth transition.
-
-\iffalse
-There are two implementations of his model: deterministic and a stochastic whose implementation for benchmarking purposes was used \cite{2018:abm4py}.
-In this preliminary version of the green growth pilot, authors consider only two classes of cars: "green" cars, which for now correspond to battery electric vehicles due to data availability, and "brown" ones. Cars are distributed on a gridded global map, that is, in the first instance "agents" are simply cells in the grid, which automatically specifies a neighbourhood network between them, and their characteristics are a number of brown and one of green cars. Each cell at each time step computes the number of new cars to be added from the total numbers exogenous given and a percentage of cars being scrapped.
-\fi
-
-\underline{Project Web-page}: \url{http://xrubio.github.io/pandora/}
-
-\underline{Downloads}: \url{https://github.com/xrubio/pandora/tarball/master}
-\iffalse
-\underline{Use case description}
-
-The first step was to compile the library itself using SCons \cite{SCONS} as the main building tool.  It is open-source, python-based and next generation substitution of make utility. Version 2.4.1 of the tool  was used because the newest version was not compatible with the build input file (/textit{SConstruct}). For the build process Pandora \cite{2014:pandora} requires three additional, external libraries: \textit{HDF5, GDAL} and \textit{BOOST}. In the case of GDAL, version 1.11.5 was used for similar reasons to SCons. GDAL is a Geospatial Data Abstraction Library and presents a single raster abstract data model and single vector abstract data model to the calling application for all supported formats. It also comes with a variety of useful command line utilities for data translation and processing. Finally, Pandora installation required a BOOST C++ library built in place.
-Depending on the hardware and system capabilities the following MPI libraries were used: Intel\textregistered MPI Library for Linux* OS, Version 2017 Update 1, Open MPI 1.10.2 (ARM), impi 5.0.3.048 (Eagle).
-Input data for benchmark has been delivered as two maps (Europe and world) with two different resolutions 840x680 and 8640x3432. 
-
-The above applications were cross-tested with selected processor architectures. The only exception is HWRF (Hurricane WRF), which could not be compiled on the ARM and Power8+ architectures due to the scale of this application and the difficulty in the compilation process.
-Each test has been repeated twice with the measurements for minimum wall time selected to be reported. It is worth noticing that some results reveal unusual and difficult-to-explain behavior in memory consumption and/or I/O, which cannot be anticipated based on processor architecture or node configuration. These cases are supposed to be a subject of future analysis by applications authors or GSS community.
-In general, the characteristic of the applications is found to be different and varying from I/O dependent to purely computational.
-\fi
 
 \paragraph{IPF} (iterative proportional fitting) is a "technique that can be used to adjust a distribution reported in one data set by totals reported in others. IPF is used to revise tables of data where the information is incomplete, inaccurate, outdated, or a sample" \cite{1912:ipf}.
 This procedure reconstructs a contingency matrix based on the known marginals in an unbiased way.
@@ -121,7 +63,75 @@ Application parameters \textit{PROCROWS, PROCCOLS, ROWBLOCK} and \textit{COLBLOC
 
 \fi
 
-\textit{Note}: These IPF codes are not published with open access on the Internet yet.
+\textit{Note}: Above-mentioned IPF codes are not published with open access on the Internet yet.
+
+\paragraph{ABM4Py/GG} (ABMS for Python) is a distributed agent-based modelling and simulation framework for fast prototyping agent based components of GSS models \cite{2018:abm4py}.
+Agent-based models implemented in \textsf{ABM4Py} follow the graph-based representation \cite{2018:abm4py,2017:graph_abms}.
+Namely, agents and loci of interactions are interconnected into a complicated dynamic network, and agent-based simulation reflects possible temporal evolution of this network.
+This network is further split into subgraphs with graph partitioning software and distributed between MPI processe.
+
+In order to benchmark this framework, we implemented the green growth agent-based model,
+first proposed in \cite{2017:gg_pilot}, within \textsf{ABM4Py} framework.
+%Green Growth using Pandora library
+The green growth model is an innovation-diffusion model for electric cars with a global scope and a fine-scale spatial data resolution. 
+%% The model is agent-based and is studying the car-centered global system in view of a green growth transition.
+%% prepared a simple agent-based model within \textsf{ABM4Py} which implements random walk with simple interaction of agents.
+This model allows to measure the most relevant performance metrics for \textsf{ABM4Py} including elapsed time, I/O, waiting time, and synchronization time.
+In order to enable comparison of the \textsf{ABM4Py} framework with \textsf{Pandora} frameworks (see below),
+our toy implementation uses a 2D mesh as a topology of environment.
+More specifically, we test against two cases -- one where layer shape size is set to 64x64 and the second with a size of 128x128.
+% For both cases the possible numbers of MPI processes used were limited to square numbers (1,4,9,16...).
+
+\iffalse
+Two types of entities are created: location, as part of a spatial domain, and acting agents that follow some decision rule and interact with each other. The agents are distributed uniformly on a 2D area. The spatial proximity increases the likelihood of agents to get connected. Each agent has only one property "A", which is initiated as a random floating point number between 0 and 1 and is connected with other m agents.
+At each step the agents perform the same action pattern. If the average of all values "A" of all connected agents is less than 0.5, the agents draw a new property "A" for themselves. It is to observe if the global average of "A" is affected by the decision rule and, if so, how.
+This minimal example therefore contains a computational component per agent (action) and a communication component. The property "A" is synchronised via ghost agents between the processes.
+Depending on whether the focus is on weak or strong scaling, the example setup can adapt to the number of used processes.
+\fi
+
+\underline{Project repository}: \url{https://github.com/CoeGSS-Project/abm4py}
+
+\underline{Downloads}: \url{https://github.com/CoeGSS-Project/abm4py/archive/master.zip}
+
+\iffalse
+\underline{Use case description}
+
+The application is purely python-based code that requires several modules among which the most important is \textit{h5py} (pythonic interface to the HDF5 binary data format). It additionally requires \textit{class\_auxiliary.pyc,  class\_graph.pyc} and \textit{lib\_gcfabm.pyc} files containing the application's byte code. Additionally, the python environment has to be equipped with additional modules preinstalled such as \textit{numpy, mpi4py, matplotlib, pandas}, etc.
+\fi
+
+\paragraph{Pandora/GG} application serves for benchmarking \textsf{Pandora} agent-based modelling and simulation framework.
+In contrast to \textsf{ABM4Py}, \textsf{Pandora} supports only raster inputs
+which restricts this framework to agent-based models with 2D mesh as a topology of environment.
+\textsf{Pandora} parallelizes the simulation process
+via splitting of rasters on even pieces and distributing them between MPI processes.
+On the other hand, \textsf{Pandora} is implemented in C++,
+which allows to reach higher performance compared to Python-based \textsf{ABM4Py} framework.
+
+Similarly to \textsf{ABM4Py} use-case, our Pandora/GG application implements the green growth agent-based model from\ \cite{2017:gg_pilot}.
+% , first proposed in \cite{2017:gg_pilot}, within \textsf{Pandora} framework.
+%% %Green Growth using Pandora library
+%% The green growth model is an innovation-diffusion model for electric cars with a global scope and a fine-scale spatial data resolution.
+%% %% The model is agent-based and is studying the car-centered global system in view of a green growth transition.
+
+\iffalse
+There are two implementations of his model: deterministic and a stochastic whose implementation for benchmarking purposes was used \cite{2018:abm4py}.
+In this preliminary version of the green growth pilot, authors consider only two classes of cars: "green" cars, which for now correspond to battery electric vehicles due to data availability, and "brown" ones. Cars are distributed on a gridded global map, that is, in the first instance "agents" are simply cells in the grid, which automatically specifies a neighbourhood network between them, and their characteristics are a number of brown and one of green cars. Each cell at each time step computes the number of new cars to be added from the total numbers exogenous given and a percentage of cars being scrapped.
+\fi
+
+\underline{Project Web-page}: \url{http://xrubio.github.io/pandora/}
+
+\underline{Downloads}: \url{https://github.com/xrubio/pandora/tarball/master}
+\iffalse
+\underline{Use case description}
+
+The first step was to compile the library itself using SCons \cite{SCONS} as the main building tool.  It is open-source, python-based and next generation substitution of make utility. Version 2.4.1 of the tool  was used because the newest version was not compatible with the build input file (/textit{SConstruct}). For the build process Pandora \cite{2014:pandora} requires three additional, external libraries: \textit{HDF5, GDAL} and \textit{BOOST}. In the case of GDAL, version 1.11.5 was used for similar reasons to SCons. GDAL is a Geospatial Data Abstraction Library and presents a single raster abstract data model and single vector abstract data model to the calling application for all supported formats. It also comes with a variety of useful command line utilities for data translation and processing. Finally, Pandora installation required a BOOST C++ library built in place.
+Depending on the hardware and system capabilities the following MPI libraries were used: Intel\textregistered MPI Library for Linux* OS, Version 2017 Update 1, Open MPI 1.10.2 (ARM), impi 5.0.3.048 (Eagle).
+Input data for benchmark has been delivered as two maps (Europe and world) with two different resolutions 840x680 and 8640x3432. 
+
+The above applications were cross-tested with selected processor architectures. The only exception is HWRF (Hurricane WRF), which could not be compiled on the ARM and Power8+ architectures due to the scale of this application and the difficulty in the compilation process.
+Each test has been repeated twice with the measurements for minimum wall time selected to be reported. It is worth noticing that some results reveal unusual and difficult-to-explain behavior in memory consumption and/or I/O, which cannot be anticipated based on processor architecture or node configuration. These cases are supposed to be a subject of future analysis by applications authors or GSS community.
+In general, the characteristic of the applications is found to be different and varying from I/O dependent to purely computational.
+\fi
 
 \subsubsection{Large-scale CFD applications}
 
@@ -137,7 +147,7 @@ large-scale CFD simulations:
 \item CMAQ -- a community multiscale air quality modelling system, which was successfully
   used for conducting large scale air quality simulations and policy making for air pollution
   control \cite{CHEMEL2014410};
-\item CM1 -- a model for studying processes in the Earth’s atmosphere, which can be used
+\item CM1 -- a model for studying processes in the Earth's atmosphere, which can be used
   for weather prediction in different GSS applications where behaviour of agents in ABMS
   component of GSS model depents on weather (e.g., predicting refugee destinations \cite{Suleimenova2017});
 \item HRWF -- a parallel implementation of the hurricane weather research and forecasting (HWRF),
